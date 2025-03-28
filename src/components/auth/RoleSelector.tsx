@@ -1,5 +1,6 @@
 
 import { Label } from '@/components/ui/label';
+import { Key } from 'lucide-react';
 
 interface RoleSelectorProps {
   role: 'customer' | 'provider';
