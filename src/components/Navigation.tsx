@@ -44,7 +44,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <h1 className="text-2xl font-bold text-brand-600">UrbanPro</h1>
+              <h1 className="text-2xl font-bold text-brand-600">QuickHomeService</h1>
             </Link>
           </div>
           
