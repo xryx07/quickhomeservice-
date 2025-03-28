@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, Search, User, LogIn, Home, Briefcase, Phone } from 'lucide-react';
-import AuthModal from './AuthModal';
+import { AuthModal } from './auth';
 import { useToast } from '@/components/ui/use-toast';
 
 const Navigation = () => {
