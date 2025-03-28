@@ -337,7 +337,7 @@ const ProviderProfile = () => {
                               {transaction.type === 'credit' ? (
                                 <ArrowUp className={`h-4 w-4 ${transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}`} />
                               ) : (
-                                <ArrowDown className={`h-4 w-4 ${transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}`} />
+                                <ArrowDown className={`h-4 w-4 ${transaction.type === 'debit' ? 'text-red-600' : 'text-green-600'}`} />
                               )}
                             </div>
                             <div>
