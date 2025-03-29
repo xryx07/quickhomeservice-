@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,7 @@ import { Search, SlidersHorizontal } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import ServiceCard from '@/components/ServiceCard';
 import Footer from '@/components/Footer';
+import ChatBot from '@/components/ChatBot';
 import { Service, Category } from '@/utils/types';
 
 // Mock data for services
@@ -414,6 +416,8 @@ const Services = () => {
           </div>
         </div>
       </main>
+      
+      <ChatBot />
       
       <Footer />
     </div>

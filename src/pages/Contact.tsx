@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import ChatBot from '@/components/ChatBot';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -178,6 +179,7 @@ const Contact = () => {
         </div>
       </main>
       
+      <ChatBot />
       <Footer />
     </div>
   );

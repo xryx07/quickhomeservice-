@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ServiceDetailComponent from '@/components/ServiceDetail';
+import ChatBot from '@/components/ChatBot';
 import { Service } from '@/utils/types';
 
 // Mock data for a single service
@@ -63,6 +64,7 @@ const ServiceDetailPage = () => {
           </div>
         )}
       </main>
+      <ChatBot />
       <Footer />
     </div>
   );

@@ -18,12 +18,12 @@ const Hero = () => {
   
   return (
     <div className="relative bg-black text-white">
-      <div className="absolute inset-0 bg-black/60 z-0"></div>
+      <div className="absolute inset-0 bg-black/40 z-0"></div>
       <div className="absolute inset-0 z-0">
         <img 
           src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
           alt="Background" 
-          className="w-full h-full object-cover opacity-65" 
+          className="w-full h-full object-cover opacity-75" 
         />
       </div>
       <div className="container mx-auto px-4 py-32 md:py-40 relative z-10">
