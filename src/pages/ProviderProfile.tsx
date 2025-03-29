@@ -1,15 +1,16 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Provider, Booking, Transaction } from '@/utils/types';
-import { ProfileCard } from '@/components/provider/ProfileCard';
-import { WalletCard } from '@/components/provider/WalletCard';
-import { ServicesCard } from '@/components/provider/ServicesCard';
-import { BookingsTab } from '@/components/provider/BookingsTab';
-import { EarningsTab } from '@/components/provider/EarningsTab';
-import { SettingsTab } from '@/components/provider/SettingsTab';
+import { 
+  ProfileCard, 
+  WalletCard, 
+  ServicesCard, 
+  BookingsTab, 
+  EarningsTab, 
+  SettingsTab 
+} from '@/components/provider';
 
 // Mock data
 const transactions: Transaction[] = [
