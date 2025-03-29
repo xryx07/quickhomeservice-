@@ -1,8 +1,8 @@
 
-export * from './ProfileCard';
-export * from './WalletCard';
-export * from './ServicesCard';
-export * from './BookingsTab';
-export * from './EarningsTab';
-export * from './SettingsTab';
-export { default as BookingManagement } from '@/components/booking/BookingManagement';
+export { default as BookingManagement } from './BookingManagement';
+export { default as BookingsTab } from './BookingsTab';
+export { default as EarningsTab } from './EarningsTab';
+export { default as ProfileCard } from './ProfileCard';
+export { default as ServicesCard } from './ServicesCard';
+export { default as SettingsTab } from './SettingsTab';
+export { default as WalletCard } from './WalletCard';

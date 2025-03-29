@@ -17,59 +17,49 @@ const Hero = () => {
   };
   
   return (
-    <div className="relative bg-gradient-to-r from-brand-600 to-blue-700 text-white">
-      <div className="absolute inset-0 bg-black/30"></div>
-      <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Professional Home Services,<br /> On Demand
+    <div className="relative bg-black text-white">
+      <div className="absolute inset-0 bg-black/75 z-0"></div>
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+          alt="Background" 
+          className="w-full h-full object-cover opacity-50" 
+        />
+      </div>
+      <div className="container mx-auto px-4 py-32 md:py-40 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+            Find the Perfect Service Provider
           </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-100">
-            Book trusted professionals for all your household needs
+          <p className="text-xl md:text-2xl mb-10 text-gray-200">
+            Connect with verified professionals for all your service needs
           </p>
-          <form onSubmit={handleSearch} className="flex w-full max-w-lg mx-auto mb-10">
-            <div className="relative flex-grow">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <Input
-                type="text"
-                placeholder="Search for a service..."
-                className="pl-10 h-12 text-black w-full rounded-r-none"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <Button type="submit" className="h-12 rounded-l-none bg-brand-800 hover:bg-brand-900">
+          <form onSubmit={handleSearch} className="flex w-full max-w-2xl mx-auto mb-10">
+            <Input
+              type="text"
+              placeholder="Search for services..."
+              className="h-14 text-black w-full rounded-r-none text-lg"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Button type="submit" className="h-14 px-8 rounded-l-none bg-black text-white border border-white hover:bg-white hover:text-black font-semibold text-lg">
               Search
             </Button>
           </form>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button 
               variant="outline" 
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/30 text-white"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black font-medium px-6 py-2 text-lg"
               onClick={() => navigate('/services?category=cleaning')}
             >
-              Home Cleaning
+              Browse Services
             </Button>
             <Button 
               variant="outline" 
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/30 text-white"
-              onClick={() => navigate('/services?category=electrician')}
+              className="bg-white text-black border-2 border-white hover:bg-transparent hover:text-white font-medium px-6 py-2 text-lg"
+              onClick={() => navigate('/become-provider')}
             >
-              Electrician
-            </Button>
-            <Button 
-              variant="outline" 
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/30 text-white"
-              onClick={() => navigate('/services?category=plumbing')}
-            >
-              Plumbing
-            </Button>
-            <Button 
-              variant="outline" 
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-white/30 text-white"
-              onClick={() => navigate('/services?category=beauty')}
-            >
-              Beauty & Spa
+              Become a Provider
             </Button>
           </div>
         </div>
