@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,8 +31,6 @@ const BookingForm = ({ service, onBookingComplete }: BookingFormProps) => {
   const { toast } = useToast();
 
   const handleGetCurrentLocation = () => {
-    // In a real implementation, this would use the browser's geolocation API
-    // and then reverse geocode to get the address
     setStreet('123 Current Location');
     setCity('Mumbai');
     setState('Maharashtra');
@@ -59,8 +56,6 @@ const BookingForm = ({ service, onBookingComplete }: BookingFormProps) => {
     
     setIsSubmitting(true);
     
-    // In a real application, this would be an API call to create a booking
-    // Simulate API call with setTimeout
     setTimeout(() => {
       const bookingData = {
         serviceId: service.id,
@@ -85,14 +80,12 @@ const BookingForm = ({ service, onBookingComplete }: BookingFormProps) => {
       
       console.log('Booking created:', bookingData);
       
-      // Show success toast based on payment method
       if (paymentMethod === 'prepaid') {
         toast({
           title: "Redirecting to Payment",
-          description: `You'll be redirected to complete payment of ₹${service.price + Math.round(service.price * 0.05)} for your booking.`,
+          description: `You'll be redirected to complete payment of ₹${service.price} for your booking.`,
         });
         
-        // Simulate payment processing
         setTimeout(() => {
           toast({
             title: "Payment Successful!",
@@ -101,10 +94,8 @@ const BookingForm = ({ service, onBookingComplete }: BookingFormProps) => {
           
           setIsSubmitting(false);
           
-          // Reset form
           resetForm();
           
-          // Callback if provided
           if (onBookingComplete) {
             onBookingComplete();
           }
@@ -112,15 +103,13 @@ const BookingForm = ({ service, onBookingComplete }: BookingFormProps) => {
       } else {
         toast({
           title: "Booking Successful!",
-          description: `Your booking for ${service.name} has been placed. You will pay ₹${service.price + Math.round(service.price * 0.05)} after the service is completed. You will receive a confirmation email and SMS shortly.`,
+          description: `Your booking for ${service.name} has been placed. You will pay ₹${service.price} after the service is completed. You will receive a confirmation email and SMS shortly.`,
         });
         
         setIsSubmitting(false);
         
-        // Reset form
         resetForm();
         
-        // Callback if provided
         if (onBookingComplete) {
           onBookingComplete();
         }

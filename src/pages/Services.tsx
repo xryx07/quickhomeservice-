@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
@@ -44,7 +43,7 @@ const allServices: Service[] = [
     category: 'plumbing',
     description: 'Fast and reliable plumbing services. We fix leaks, clogs, and install new fixtures.',
     price: 649,
-    image: 'https://images.unsplash.com/photo-1606274470197-5aec27f5e61a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    image: 'https://images.unsplash.com/photo-1585704032915-c3400305e979?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
     rating: 4.6,
     providerId: 'p3',
     providerName: 'PlumbRight'
@@ -77,7 +76,7 @@ const allServices: Service[] = [
     category: 'electrician',
     description: 'Complete wiring and installation services for new construction or renovation projects.',
     price: 1499,
-    image: 'https://images.unsplash.com/photo-1631646109840-a2367068def3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    image: 'https://images.unsplash.com/photo-1555963966-b7ae5252385a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
     rating: 4.8,
     providerId: 'p2',
     providerName: 'ElectriPro'
@@ -144,7 +143,6 @@ const Services = () => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [filteredServices, setFilteredServices] = useState<Service[]>(allServices);
   
-  // Parse URL query parameters
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const categoryParam = params.get('category');
@@ -158,14 +156,12 @@ const Services = () => {
       setSearchQuery(searchParam);
     }
     
-    // Apply filters
     filterServices(searchParam || searchQuery, categoryParam || selectedCategory, priceRange, minRating);
   }, [location.search]);
   
   const filterServices = (search: string, category: string | null, price: number[], rating: number) => {
     let filtered = [...allServices];
     
-    // Filter by search query
     if (search) {
       filtered = filtered.filter(service => 
         service.name.toLowerCase().includes(search.toLowerCase()) || 
@@ -173,15 +169,12 @@ const Services = () => {
       );
     }
     
-    // Filter by category
     if (category) {
       filtered = filtered.filter(service => service.category.toLowerCase() === category.toLowerCase());
     }
     
-    // Filter by price range
     filtered = filtered.filter(service => service.price >= price[0] && service.price <= price[1]);
     
-    // Filter by minimum rating
     filtered = filtered.filter(service => service.rating >= rating);
     
     setFilteredServices(filtered);
@@ -245,7 +238,6 @@ const Services = () => {
             </form>
             
             <div className="flex flex-col md:flex-row gap-8">
-              {/* Filters - Desktop */}
               <div className="md:w-1/4 lg:w-1/5 hidden md:block">
                 <div className="bg-white rounded-lg border p-4">
                   <h2 className="font-semibold text-lg mb-4">Filters</h2>
@@ -314,7 +306,6 @@ const Services = () => {
                 </div>
               </div>
               
-              {/* Filters - Mobile */}
               {isMobileFilterOpen && (
                 <div className="fixed inset-0 bg-black/50 z-40 md:hidden">
                   <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-lg p-4 animate-slide-up">
@@ -405,7 +396,6 @@ const Services = () => {
                 </div>
               )}
               
-              {/* Services List */}
               <div className="md:w-3/4 lg:w-4/5">
                 {filteredServices.length === 0 ? (
                   <div className="text-center py-12">

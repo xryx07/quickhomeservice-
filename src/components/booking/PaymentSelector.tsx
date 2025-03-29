@@ -13,9 +13,6 @@ interface PaymentSelectorProps {
 const PaymentSelector: React.FC<PaymentSelectorProps> = ({
   paymentMethod, setPaymentMethod, price
 }) => {
-  const commissionAmount = Math.round(price * 0.05);
-  const totalAmount = price + commissionAmount;
-
   return (
     <>
       <div className="space-y-2">
@@ -43,17 +40,9 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
       </div>
       
       <div className="border-t pt-4">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">Service Price:</span>
-          <span className="font-semibold">₹{price}</span>
-        </div>
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-muted-foreground">Platform Fee:</span>
-          <span>₹{commissionAmount}</span>
-        </div>
         <div className="flex justify-between items-center mt-2 text-lg font-bold">
           <span>Total:</span>
-          <span>₹{totalAmount}</span>
+          <span>₹{price}</span>
         </div>
       </div>
     </>
