@@ -9,6 +9,7 @@ import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
 import ProviderOnboarding from "./pages/ProviderOnboarding";
 import Admin from "./pages/Admin";
+import AdminBookings from "./pages/AdminBookings";
 import UserProfile from "./pages/UserProfile";
 import ProviderProfile from "./pages/ProviderProfile";
 import Contact from "./pages/Contact";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/become-provider" element={<ProviderOnboarding />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/bookings" element={<AdminBookings />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/provider/profile" element={<ProviderProfile />} />
           <Route path="/contact" element={<Contact />} />

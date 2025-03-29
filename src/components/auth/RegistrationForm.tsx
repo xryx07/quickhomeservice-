@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { User, AtSign, Phone, RefreshCw } from 'lucide-react';
+import { User, AtSign, Phone, RefreshCw, Key } from 'lucide-react';
+import RoleSelector from './RoleSelector';
 
 interface RegistrationFormProps {
   onClose: () => void;
