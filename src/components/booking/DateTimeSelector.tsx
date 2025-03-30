@@ -20,7 +20,7 @@ interface DateTimeSelectorProps {
   setTimeSlot: (time: string) => void;
 }
 
-const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
+export const DateTimeSelector: React.FC<DateTimeSelectorProps> = ({
   date, setDate, timeSlot, setTimeSlot
 }) => {
   return (

@@ -3,7 +3,7 @@ import React from 'react';
 import { Service } from '@/utils/types';
 import { ServiceInfo } from '@/components/service-detail';
 import { ServiceDetailTabs } from '@/components/service-detail';
-import BookingForm from '@/components/booking/BookingForm';
+import { BookingForm } from '@/components/booking';
 
 interface ServiceDetailContainerProps {
   service: Service;

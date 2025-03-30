@@ -33,7 +33,7 @@ interface AddressFormProps {
   handleGetCurrentLocation: () => void;
 }
 
-const AddressForm: React.FC<AddressFormProps> = ({
+export const AddressForm: React.FC<AddressFormProps> = ({
   street, setStreet,
   city, setCity,
   state, setState,

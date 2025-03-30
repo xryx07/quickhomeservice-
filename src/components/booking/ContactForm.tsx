@@ -13,7 +13,7 @@ interface ContactFormProps {
   setNote: (value: string) => void;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({
+export const ContactForm: React.FC<ContactFormProps> = ({
   phone, setPhone, email, setEmail, note, setNote
 }) => {
   return (

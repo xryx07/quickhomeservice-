@@ -10,7 +10,7 @@ interface PaymentSelectorProps {
   price: number;
 }
 
-const PaymentSelector: React.FC<PaymentSelectorProps> = ({
+export const PaymentSelector: React.FC<PaymentSelectorProps> = ({
   paymentMethod, setPaymentMethod, price
 }) => {
   return (
