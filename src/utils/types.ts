@@ -1,4 +1,3 @@
-
 export type UserRole = 'customer' | 'provider' | 'admin';
 
 export interface User {
@@ -44,6 +43,7 @@ export interface Service {
   rating: number;
   providerId: string;
   providerName: string;
+  isActive?: boolean;
 }
 
 export interface Category {
