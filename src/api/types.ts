@@ -38,6 +38,7 @@ export interface CreateServiceRequest {
   price: number;
   image: string;
   providerId: string;
+  features?: string[];
 }
 
 export interface UpdateServiceRequest {
@@ -48,6 +49,7 @@ export interface UpdateServiceRequest {
   price?: number;
   image?: string;
   isActive?: boolean;
+  features?: string[];
 }
 
 export interface ServiceResponse {
@@ -61,6 +63,7 @@ export interface ServiceResponse {
   providerId: string;
   providerName: string;
   isActive: boolean;
+  features?: string[];
 }
 
 export interface ServicesResponse {
@@ -210,7 +213,12 @@ export interface ProcessPaymentRequest {
   bookingId: string;
   amount: number;
   paymentMethod: 'card' | 'upi' | 'cod';
-  paymentDetails?: any;
+  paymentDetails?: {
+    cardNumber?: string;
+    expiryDate?: string;
+    cvv?: string;
+    upiId?: string;
+  };
 }
 
 export interface PaymentResponse {

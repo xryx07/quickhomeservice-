@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, Clock } from 'lucide-react';
+import { Star, Clock, Check } from 'lucide-react';
 import { Service } from '@/utils/types';
 
 interface ServiceCardProps {
@@ -10,7 +10,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ service }: ServiceCardProps) => {
-  const { id, name, description, price, image, rating, providerId, providerName } = service;
+  const { id, name, description, price, image, rating, providerId, providerName, features } = service;
   
   return (
     <Card className="service-card overflow-hidden h-full flex flex-col">
@@ -32,7 +32,20 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
         <p className="text-sm text-muted-foreground">{description.length > 100 ? description.substring(0, 100) + '...' : description}</p>
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-grow">
-        <div className="flex justify-between items-center mb-2 text-sm text-muted-foreground">
+        {features && features.length > 0 && (
+          <div className="mb-2">
+            <h4 className="text-sm font-medium mb-1">Features:</h4>
+            <ul className="text-sm space-y-1">
+              {features.slice(0, 3).map((feature, index) => (
+                <li key={index} className="flex items-center">
+                  <Check size={12} className="text-green-500 mr-1 flex-shrink-0" />
+                  <span className="text-gray-600">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="flex justify-between items-center mt-2 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Clock size={14} className="mr-1" />
             <span>60-90 min</span>
