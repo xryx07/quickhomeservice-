@@ -3,7 +3,7 @@ import { SlidersHorizontal } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ChatBot from '@/components/ChatBot';
-import { allServices, allCategories } from '@/data/servicesData';
+import { allServices, allCategories } from '@/data/services';
 import { useServiceFiltering } from '@/hooks/useServiceFiltering';
 import SearchBar from '@/components/services/SearchBar';
 import FilterSidebar from '@/components/services/FilterSidebar';

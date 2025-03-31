@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, MapPin, Clock, Briefcase } from 'lucide-react';
 import { Service } from '@/utils/types';
 
 interface ServiceOverviewProps {
@@ -30,6 +30,44 @@ const ServiceOverview: React.FC<ServiceOverviewProps> = ({ service }) => {
           </div>
         </div>
       )}
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {service.duration && (
+          <div className="flex items-start">
+            <Clock className="h-5 w-5 mr-2 text-muted-foreground" />
+            <div>
+              <h4 className="text-sm font-medium">Duration</h4>
+              <p className="text-sm text-muted-foreground">{service.duration}</p>
+            </div>
+          </div>
+        )}
+        
+        {service.equipmentIncluded !== undefined && (
+          <div className="flex items-start">
+            <Briefcase className="h-5 w-5 mr-2 text-muted-foreground" />
+            <div>
+              <h4 className="text-sm font-medium">Equipment</h4>
+              <p className="text-sm text-muted-foreground">
+                {service.equipmentIncluded ? 'Included' : 'Not included'}
+              </p>
+            </div>
+          </div>
+        )}
+        
+        {service.serviceArea && service.serviceArea.length > 0 && (
+          <div className="flex items-start">
+            <MapPin className="h-5 w-5 mr-2 text-muted-foreground" />
+            <div>
+              <h4 className="text-sm font-medium">Service Area</h4>
+              <ul className="text-sm text-muted-foreground">
+                {service.serviceArea.map((area, index) => (
+                  <li key={index}>{area}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
       
       <div>
         <h3 className="text-xl font-semibold mb-3">Terms and Conditions</h3>

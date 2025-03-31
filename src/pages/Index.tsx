@@ -8,58 +8,7 @@ import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import { Service, Category } from '@/utils/types';
-
-// Mock data for featured categories
-const featuredCategories: Category[] = [
-  {
-    id: 'c1',
-    name: 'Cleaning',
-    icon: '🧹',
-    services: 26
-  },
-  {
-    id: 'c2',
-    name: 'Electrician',
-    icon: '⚡',
-    services: 18
-  },
-  {
-    id: 'c3',
-    name: 'Plumbing',
-    icon: '🔧',
-    services: 15
-  },
-  {
-    id: 'c4',
-    name: 'Beauty & Spa',
-    icon: '💅',
-    services: 30
-  },
-  {
-    id: 'c5',
-    name: 'Appliance Repair',
-    icon: '🔌',
-    services: 12
-  },
-  {
-    id: 'c6',
-    name: 'Home Painting',
-    icon: '🎨',
-    services: 8
-  },
-  {
-    id: 'c7',
-    name: 'Pest Control',
-    icon: '🐜',
-    services: 6
-  },
-  {
-    id: 'c8',
-    name: 'Carpentry',
-    icon: '🪚',
-    services: 10
-  }
-];
+import { allCategories } from '@/data/services';
 
 const Index = () => {
   return (
@@ -73,7 +22,7 @@ const Index = () => {
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">Browse Categories</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6">
-              {featuredCategories.map((category) => (
+              {allCategories.map((category) => (
                 <Link key={category.id} to={`/services?category=${category.name.toLowerCase()}`}>
                   <Card className="h-full transition-all hover:shadow-md hover:-translate-y-1 text-center">
                     <CardContent className="p-6 flex flex-col items-center justify-center">
