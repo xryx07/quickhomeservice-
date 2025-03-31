@@ -1,4 +1,3 @@
-
 export type UserRole = 'customer' | 'provider' | 'admin';
 
 export interface User {
@@ -27,6 +26,8 @@ export interface Provider extends User {
   };
   rating: number;
   totalJobs: number;
+  specializations?: string[];
+  experienceYears?: number;
 }
 
 export interface Customer extends User {
@@ -46,6 +47,9 @@ export interface Service {
   providerName: string;
   isActive?: boolean;
   features?: string[];
+  duration?: string;
+  equipmentIncluded?: boolean;
+  serviceArea?: string[];
 }
 
 export interface Category {

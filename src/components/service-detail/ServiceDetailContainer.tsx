@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Trash2, Clock, MapPin, Tool } from 'lucide-react';
 
 interface ServiceDetailContainerProps {
   service: Service;
@@ -92,6 +92,47 @@ const ServiceDetailContainer: React.FC<ServiceDetailContainerProps> = ({ service
         {/* Left Column - Service Details */}
         <div className="md:col-span-2 space-y-6">
           <ServiceInfo service={service} />
+          
+          {/* Additional service details section */}
+          <div className="p-6 border rounded-lg bg-white shadow-sm">
+            <h3 className="text-xl font-semibold mb-4">Service Details</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {service.duration && (
+                <div className="flex items-center">
+                  <Clock className="h-5 w-5 mr-2 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">Duration</p>
+                    <p className="text-sm text-muted-foreground">{service.duration}</p>
+                  </div>
+                </div>
+              )}
+              
+              {service.equipmentIncluded !== undefined && (
+                <div className="flex items-center">
+                  <Tool className="h-5 w-5 mr-2 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">Equipment</p>
+                    <p className="text-sm text-muted-foreground">
+                      {service.equipmentIncluded ? 'Included' : 'Not included'}
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {service.serviceArea && service.serviceArea.length > 0 && (
+                <div className="flex items-center col-span-1 sm:col-span-2">
+                  <MapPin className="h-5 w-5 mr-2 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-medium">Service Area</p>
+                    <p className="text-sm text-muted-foreground">
+                      {service.serviceArea.join(', ')}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
           <ServiceDetailTabs service={service} />
         </div>
         

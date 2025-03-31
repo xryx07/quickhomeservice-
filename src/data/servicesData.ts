@@ -1,4 +1,3 @@
-
 import { Service, Category } from '@/utils/types';
 
 // Mock data for services
@@ -164,7 +163,9 @@ export const allServices: Service[] = [
     rating: 4.9,
     providerId: 'p4',
     providerName: 'GlamHome',
-    features: ['Premium products', 'Skilled stylists', 'Customized services']
+    features: ['Premium products', 'Skilled stylists', 'Customized services'],
+    duration: '45-60 minutes',
+    equipmentIncluded: true
   },
   {
     id: '8',
@@ -176,7 +177,9 @@ export const allServices: Service[] = [
     rating: 4.9,
     providerId: 'p4',
     providerName: 'GlamHome',
-    features: ['Organic products', 'Anti-aging treatments', 'Deep cleansing']
+    features: ['Organic products', 'Anti-aging treatments', 'Deep cleansing', 'Skin analysis', 'Relaxation therapy'],
+    duration: '60-90 minutes',
+    equipmentIncluded: true
   },
   {
     id: '107',
@@ -188,7 +191,9 @@ export const allServices: Service[] = [
     rating: 4.8,
     providerId: 'p4',
     providerName: 'GlamHome',
-    features: ['Gel options', 'Nail art', 'Long-lasting finish']
+    features: ['Gel options', 'Nail art', 'Long-lasting finish', 'Cuticle care', 'Soothing massage'],
+    duration: '60-75 minutes',
+    equipmentIncluded: true
   },
   {
     id: '108',
@@ -200,7 +205,37 @@ export const allServices: Service[] = [
     rating: 4.9,
     providerId: 'p4',
     providerName: 'GlamHome',
-    features: ['Trial session', 'Premium brands', 'Hair styling included']
+    features: ['Trial session', 'Premium brands', 'Hair styling included', 'Lasts 12+ hours', 'HD photography-ready'],
+    duration: '120-180 minutes',
+    equipmentIncluded: true
+  },
+  {
+    id: '201',
+    name: 'Hair Spa & Treatment',
+    category: 'beauty',
+    description: 'Revitalize your hair with our professional hair spa treatments targeting various hair concerns.',
+    price: 1499,
+    image: 'https://images.unsplash.com/photo-1582095133179-bfd08e2fc6b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.7,
+    providerId: 'p4',
+    providerName: 'GlamHome',
+    features: ['Keratin treatment', 'Deep conditioning', 'Scalp massage', 'Anti-dandruff', 'Hair growth stimulation'],
+    duration: '90-120 minutes',
+    equipmentIncluded: true
+  },
+  {
+    id: '202',
+    name: 'Full Body Waxing',
+    category: 'beauty',
+    description: 'Professional waxing services for smooth, hair-free skin using premium quality wax.',
+    price: 1899,
+    image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.6,
+    providerId: 'p4',
+    providerName: 'GlamHome',
+    features: ['Hygienic process', 'Less painful technique', 'Soothing post-wax care', 'Long-lasting results', 'Skin-friendly products'],
+    duration: '75-90 minutes',
+    equipmentIncluded: true
   },
   
   // Appliance Repair
@@ -214,7 +249,10 @@ export const allServices: Service[] = [
     rating: 4.7,
     providerId: 'p5',
     providerName: 'AppliancePro',
-    features: ['All brands', 'Same-day service', '90-day warranty']
+    features: ['All brands', 'Same-day service', '90-day warranty', 'Genuine parts', 'Troubleshooting included'],
+    duration: '60-120 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 30km']
   },
   {
     id: '110',
@@ -226,7 +264,55 @@ export const allServices: Service[] = [
     rating: 4.6,
     providerId: 'p5',
     providerName: 'AppliancePro',
-    features: ['Genuine parts', 'Free diagnosis', 'Preventive maintenance']
+    features: ['Genuine parts', 'Free diagnosis', 'Preventive maintenance', 'Water inlet fix', 'Motor repair'],
+    duration: '60-90 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 25km']
+  },
+  {
+    id: '203',
+    name: 'Air Conditioner Service',
+    category: 'appliance',
+    description: 'Comprehensive AC servicing, repair, and maintenance for optimal cooling performance and energy efficiency.',
+    price: 999,
+    image: 'https://images.unsplash.com/photo-1581275868311-a923c27eca88?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.8,
+    providerId: 'p5',
+    providerName: 'AppliancePro',
+    features: ['Filter cleaning', 'Gas refilling', 'Performance tuning', 'Complete sanitization', 'Noise reduction'],
+    duration: '60-90 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 20km']
+  },
+  {
+    id: '204',
+    name: 'Microwave Repair',
+    category: 'appliance',
+    description: 'Expert repair service for all types of microwave ovens, addressing heating issues, timer problems, and more.',
+    price: 599,
+    image: 'https://images.unsplash.com/photo-1585269794640-7a1db9c0bb31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.5,
+    providerId: 'p5',
+    providerName: 'AppliancePro',
+    features: ['All brands covered', 'Component-level repair', '60-day warranty', 'Door mechanism fix', 'Control panel repair'],
+    duration: '45-60 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 15km']
+  },
+  {
+    id: '205',
+    name: 'Television Repair',
+    category: 'appliance',
+    description: 'Professional TV repair service for LED, LCD, OLED, and Smart TVs with expert technicians.',
+    price: 799,
+    image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.6,
+    providerId: 'p5',
+    providerName: 'AppliancePro',
+    features: ['Display issues', 'Sound problems', 'Smart TV setup', 'Connectivity troubleshooting', 'Remote control repair'],
+    duration: '60-90 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 20km']
   },
   
   // Home Painting
@@ -240,7 +326,10 @@ export const allServices: Service[] = [
     rating: 4.8,
     providerId: 'p6',
     providerName: 'ColorMasters',
-    features: ['Premium paints', 'Color consultation', 'Furniture protection']
+    features: ['Premium paints', 'Color consultation', 'Furniture protection', 'Crack filling', 'Smooth finish', 'Wall putty included'],
+    duration: '2-5 days',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 50km']
   },
   {
     id: '112',
@@ -252,7 +341,40 @@ export const allServices: Service[] = [
     rating: 4.7,
     providerId: 'p6',
     providerName: 'ColorMasters',
-    features: ['Weather-resistant paint', 'Surface preparation', '3-year warranty']
+    features: ['Weather-resistant paint', 'Surface preparation', '3-year warranty', 'Water sealing', 'Anti-fungal coating', 'UV protection'],
+    duration: '3-7 days',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 50km']
+  },
+  {
+    id: '206',
+    name: 'Decorative Wall Painting',
+    category: 'painting',
+    description: 'Artistic wall painting services to create unique and personalized home interiors with stunning designs.',
+    price: 4999,
+    image: 'https://images.unsplash.com/photo-1588854337236-6889d631faa8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.9,
+    providerId: 'p6',
+    providerName: 'ColorMasters',
+    features: ['Custom designs', 'Texture painting', 'Stencil art', 'Designer consultation', 'Digital mockups', 'Premium materials'],
+    duration: '2-4 days',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 30km']
+  },
+  {
+    id: '207',
+    name: 'Wood Polishing & Varnishing',
+    category: 'painting',
+    description: 'Professional wood polishing, varnishing, and restoration services for furniture, doors, and wooden surfaces.',
+    price: 1499,
+    image: 'https://images.unsplash.com/photo-1577572356739-c503253fcc98?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.7,
+    providerId: 'p6',
+    providerName: 'ColorMasters',
+    features: ['Melamine finish', 'French polishing', 'Scratch removal', 'Color matching', 'Protective coatings', 'Old furniture restoration'],
+    duration: '1-3 days',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 40km']
   },
   
   // Pest Control
@@ -266,7 +388,10 @@ export const allServices: Service[] = [
     rating: 4.6,
     providerId: 'p7',
     providerName: 'PestGuard',
-    features: ['Child-safe solutions', 'Preventive treatment', 'Scheduled maintenance']
+    features: ['Child-safe solutions', 'Preventive treatment', 'Scheduled maintenance', 'Odorless chemicals', 'Kitchen-safe formulas', 'Multiple follow-ups'],
+    duration: '60-90 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 35km']
   },
   {
     id: '114',
@@ -278,7 +403,40 @@ export const allServices: Service[] = [
     rating: 4.8,
     providerId: 'p7',
     providerName: 'PestGuard',
-    features: ['Inspection report', 'Chemical barriers', 'Long-term protection']
+    features: ['Inspection report', 'Chemical barriers', 'Long-term protection', 'Wood treatment', 'Soil treatment', '5-year warranty'],
+    duration: '120-180 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 30km']
+  },
+  {
+    id: '208',
+    name: 'Bed Bug Treatment',
+    category: 'pestcontrol',
+    description: 'Specialized bed bug elimination service using advanced techniques and professional-grade products.',
+    price: 1299,
+    image: 'https://images.unsplash.com/photo-1584018961857-9a607d617f38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.7,
+    providerId: 'p7',
+    providerName: 'PestGuard',
+    features: ['Heat treatment', 'Mattress treatment', 'Furniture inspection', '30-day guarantee', 'Preventive consultation', 'Follow-up visit'],
+    duration: '120-150 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 25km']
+  },
+  {
+    id: '209',
+    name: 'Rodent Control',
+    category: 'pestcontrol',
+    description: 'Effective rat and mice control services to eliminate rodents and prevent re-infestation.',
+    price: 999,
+    image: 'https://images.unsplash.com/photo-1571615340310-92599bfd6738?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+    rating: 4.6,
+    providerId: 'p7',
+    providerName: 'PestGuard',
+    features: ['Humane trapping', 'Entry point sealing', 'Preventive measures', 'Bait stations', 'Property inspection', 'Bimonthly follow-ups'],
+    duration: '90-120 minutes',
+    equipmentIncluded: true,
+    serviceArea: ['All city areas', 'Suburbs within 35km']
   },
   
   // Carpentry
@@ -358,4 +516,3 @@ export const allCategories: Category[] = [
     services: 10
   }
 ];
-
