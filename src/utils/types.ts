@@ -97,3 +97,23 @@ export interface AuthState {
   isLoading: boolean;
   error: string | null;
 }
+
+// Payment related types
+export type PaymentMethod = 'card' | 'upi' | 'cod';
+
+export interface PaymentDetails {
+  cardNumber?: string;
+  expiryDate?: string;
+  cvv?: string;
+  upiId?: string;
+}
+
+export interface Payment {
+  id: string;
+  bookingId: string;
+  amount: number;
+  status: 'success' | 'failed' | 'pending';
+  transactionId: string;
+  paymentMethod: PaymentMethod;
+  timestamp: string;
+}

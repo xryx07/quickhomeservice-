@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { paymentApi } from '@/api/paymentApi';
 import { USE_PAYMENT_GATEWAY } from '@/utils/paymentConfig';
 import { Loader2, CreditCard, Check } from 'lucide-react';
+import { ProcessPaymentRequest } from '@/api/types';
 
 interface PaymentProcessorProps {
   bookingId: string;
@@ -28,10 +29,11 @@ export const PaymentProcessor: React.FC<PaymentProcessorProps> = ({
     setIsProcessing(true);
     
     try {
-      const paymentData = {
+      // Use the correct type for paymentMethod
+      const paymentData: ProcessPaymentRequest = {
         bookingId,
         amount,
-        paymentMethod: 'card',
+        paymentMethod: 'card', // Now this is typed correctly as 'card' | 'upi' | 'cod'
         paymentDetails: {
           // In a real implementation, these would come from form inputs
           cardNumber: '**** **** **** 1234', // Masked for demo
