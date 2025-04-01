@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
 import { Star, Clock, Check } from 'lucide-react';
 import { Service } from '@/utils/types';
+import { Badge } from '@/components/ui/badge';
 
 interface ServiceCardProps {
   service: Service;
@@ -29,26 +30,31 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
             <span>{rating.toFixed(1)}</span>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground">{description.length > 100 ? description.substring(0, 100) + '...' : description}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-grow">
         {features && features.length > 0 && (
-          <div className="mb-2">
-            <h4 className="text-sm font-medium mb-1">Features:</h4>
-            <ul className="text-sm space-y-1">
-              {features.slice(0, 3).map((feature, index) => (
-                <li key={index} className="flex items-center">
-                  <Check size={12} className="text-green-500 mr-1 flex-shrink-0" />
-                  <span className="text-gray-600">{feature}</span>
-                </li>
+          <div className="mb-3">
+            <h4 className="text-sm font-medium mb-2">Features:</h4>
+            <div className="flex flex-wrap gap-1.5">
+              {features.slice(0, 4).map((feature, index) => (
+                <Badge key={index} variant="outline" className="text-xs bg-gray-50">
+                  <Check size={10} className="text-green-500 mr-1 flex-shrink-0" />
+                  {feature}
+                </Badge>
               ))}
-            </ul>
+              {features.length > 4 && (
+                <Badge variant="outline" className="text-xs bg-gray-50">
+                  +{features.length - 4} more
+                </Badge>
+              )}
+            </div>
           </div>
         )}
         <div className="flex justify-between items-center mt-2 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Clock size={14} className="mr-1" />
-            <span>60-90 min</span>
+            <span>{service.duration || '60-90 min'}</span>
           </div>
           <Link to={`/provider/${providerId}`} className="hover:underline">
             {providerName}
