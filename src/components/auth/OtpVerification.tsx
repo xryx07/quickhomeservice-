@@ -1,8 +1,13 @@
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RefreshCw } from 'lucide-react';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { useState, useEffect } from 'react';
 
 interface OtpVerificationProps {
   phone: string;
@@ -12,8 +17,32 @@ interface OtpVerificationProps {
 }
 
 const OtpVerification = ({ phone, otp, setOtp, sendOtpAgain }: OtpVerificationProps) => {
+  const [timer, setTimer] = useState<number>(30);
+  const [canResend, setCanResend] = useState<boolean>(false);
+
+  // Timer for OTP resend
+  useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setCanResend(true);
+    }
+  }, [timer]);
+
+  // Handle OTP resend
+  const handleResendOtp = () => {
+    if (canResend) {
+      sendOtpAgain();
+      setTimer(30);
+      setCanResend(false);
+    }
+  };
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="text-center mb-4">
         <p className="text-muted-foreground">
           We've sent a verification code to {phone}
@@ -22,12 +51,19 @@ const OtpVerification = ({ phone, otp, setOtp, sendOtpAgain }: OtpVerificationPr
       
       <div className="space-y-2">
         <Label htmlFor="otp">Verification Code</Label>
-        <Input
-          id="otp"
-          placeholder="Enter verification code"
+        <InputOTP
           value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          required
+          onChange={setOtp}
+          maxLength={6}
+          render={({ slots }) => (
+            <div className="flex justify-center gap-2">
+              <InputOTPGroup>
+                {slots.map((slot, index) => (
+                  <InputOTPSlot key={index} {...slot} index={index} />
+                ))}
+              </InputOTPGroup>
+            </div>
+          )}
         />
       </div>
       
@@ -35,9 +71,11 @@ const OtpVerification = ({ phone, otp, setOtp, sendOtpAgain }: OtpVerificationPr
         type="button" 
         variant="outline" 
         className="w-full flex items-center justify-center gap-2"
-        onClick={sendOtpAgain}
+        onClick={handleResendOtp}
+        disabled={!canResend}
       >
-        <RefreshCw size={16} /> Resend Code
+        <RefreshCw size={16} className={canResend ? '' : 'animate-spin'} /> 
+        {canResend ? 'Resend Code' : `Resend code in ${timer}s`}
       </Button>
     </div>
   );
