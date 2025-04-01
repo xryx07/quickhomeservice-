@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { Edit, Trash2, Clock, MapPin, Tool } from 'lucide-react';
+import { Edit, Trash2, Clock, MapPin, Wrench } from 'lucide-react';
 
 interface ServiceDetailContainerProps {
   service: Service;
@@ -109,7 +109,7 @@ const ServiceDetailContainer: React.FC<ServiceDetailContainerProps> = ({ service
               
               {service.equipmentIncluded !== undefined && (
                 <div className="flex items-center">
-                  <Tool className="h-5 w-5 mr-2 text-gray-500" />
+                  <Wrench className="h-5 w-5 mr-2 text-gray-500" />
                   <div>
                     <p className="text-sm font-medium">Equipment</p>
                     <p className="text-sm text-muted-foreground">
