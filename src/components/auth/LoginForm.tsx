@@ -4,75 +4,131 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { AtSign, Key } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import { authApi } from '@/api';
+import OtpVerification from './OtpVerification';
 
 interface LoginFormProps {
   onClose: () => void;
 }
 
 const LoginForm = ({ onClose }: LoginFormProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [isPhoneVerifying, setIsPhoneVerifying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
   const { toast } = useToast();
   
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     
-    // Mock login for demonstration
-    setTimeout(() => {
-      setIsLoading(false);
+    if (!isPhoneVerifying) {
+      // Step 1: Send OTP to phone
+      setIsLoading(true);
+      try {
+        const result = await authApi.login({ phone });
+        if (result.success) {
+          setIsPhoneVerifying(true);
+          toast({
+            title: "Verification code sent",
+            description: `We've sent a verification code to ${phone}`,
+          });
+        } else {
+          toast({
+            title: "Failed to send code",
+            description: result.message || "Please try again",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        toast({
+          title: "Failed to send code",
+          description: "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+        console.error('Failed to send OTP:', error);
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+    
+    // Step 2: Verify OTP and login
+    setIsLoading(true);
+    try {
+      const authResponse = await authApi.verifyOtp({ phone, otp });
+      
+      // Store auth data
+      localStorage.setItem('token', authResponse.token);
+      localStorage.setItem('user', JSON.stringify(authResponse.user));
+      
       toast({
         title: "Logged in successfully",
         description: "Welcome back to QuickHomeService!",
       });
       onClose();
-    }, 1500);
+    } catch (error) {
+      toast({
+        title: "Login failed",
+        description: "Invalid verification code. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Login error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const sendOtpAgain = async () => {
+    try {
+      await authApi.resendOtp(phone);
+      toast({
+        title: "Verification code sent again",
+        description: `We've sent a new verification code to ${phone}`,
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to resend code",
+        description: "Could not send a new code. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Failed to resend OTP:', error);
+    }
   };
 
   return (
     <form onSubmit={handleLogin} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <div className="relative">
-          <AtSign className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-          <Input
-            id="email"
-            placeholder="Enter your email"
-            className="pl-10"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      {!isPhoneVerifying ? (
+        <div className="space-y-2">
+          <Label htmlFor="phone">Phone Number</Label>
+          <div className="relative">
+            <Phone className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
+            <Input
+              id="phone"
+              placeholder="Enter your phone number"
+              className="pl-10"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+          </div>
         </div>
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <div className="relative">
-          <Key className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-          <Input
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-            className="pl-10"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-      </div>
-      
-      <div className="text-right">
-        <a href="#" className="text-sm text-brand-600 hover:underline">
-          Forgot password?
-        </a>
-      </div>
+      ) : (
+        <OtpVerification 
+          phone={phone}
+          otp={otp}
+          setOtp={setOtp}
+          sendOtpAgain={sendOtpAgain}
+        />
+      )}
       
       <Button type="submit" className="w-full btn-brand" disabled={isLoading}>
-        {isLoading ? 'Logging in...' : 'Login'}
+        {isLoading 
+          ? 'Processing...' 
+          : isPhoneVerifying 
+            ? 'Login' 
+            : 'Send Verification Code'}
       </Button>
     </form>
   );

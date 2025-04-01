@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
-import { User, AtSign, Phone, RefreshCw, Key } from 'lucide-react';
+import { User, AtSign, Phone, Key } from 'lucide-react';
 import RoleSelector from './RoleSelector';
+import OtpVerification from './OtpVerification';
+import { authApi } from '@/api';
 
 interface RegistrationFormProps {
   onClose: () => void;
@@ -23,44 +25,103 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
   
   const { toast } = useToast();
   
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!isPhoneVerifying) {
-      setIsPhoneVerifying(true);
-      toast({
-        title: "Verification code sent",
-        description: `We've sent a verification code to ${phone}`,
-      });
+      setIsLoading(true);
+      try {
+        const result = await authApi.login({ phone });
+        if (result.success) {
+          setIsPhoneVerifying(true);
+          toast({
+            title: "Verification code sent",
+            description: `We've sent a verification code to ${phone}`,
+          });
+        } else {
+          toast({
+            title: "Failed to send code",
+            description: result.message || "Please try again",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        toast({
+          title: "Failed to send code",
+          description: "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+        console.error('Failed to send OTP:', error);
+      } finally {
+        setIsLoading(false);
+      }
       return;
     }
     
     setIsLoading(true);
     
-    // Mock registration for demonstration
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "Registration successful",
-        description: `You've been registered as a ${role}`,
-      });
-      onClose();
+    try {
+      // Verify OTP first
+      await authApi.verifyOtp({ phone, otp });
       
-      // Reset form
-      setEmail('');
-      setPassword('');
-      setName('');
-      setPhone('');
-      setOtp('');
-      setIsPhoneVerifying(false);
-    }, 1500);
+      // If OTP is verified, proceed with registration
+      const registerData = {
+        name,
+        email,
+        phone,
+        role
+      };
+      
+      const result = await authApi.register(registerData);
+      
+      if (result.success) {
+        toast({
+          title: "Registration successful",
+          description: `You've been registered as a ${role}`,
+        });
+        onClose();
+        
+        // Reset form
+        setEmail('');
+        setPassword('');
+        setName('');
+        setPhone('');
+        setOtp('');
+        setIsPhoneVerifying(false);
+      } else {
+        toast({
+          title: "Registration failed",
+          description: result.message || "Please try again",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Registration failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Registration error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   
-  const sendOtpAgain = () => {
-    toast({
-      title: "Verification code sent again",
-      description: `We've sent a new verification code to ${phone}`,
-    });
+  const sendOtpAgain = async () => {
+    try {
+      await authApi.resendOtp(phone);
+      toast({
+        title: "Verification code sent again",
+        description: `We've sent a new verification code to ${phone}`,
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to resend code",
+        description: "Could not send a new code. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Failed to resend OTP:', error);
+    }
   };
 
   return (
@@ -149,33 +210,12 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
           </div>
         </>
       ) : (
-        <div className="space-y-4">
-          <div className="text-center mb-4">
-            <p className="text-muted-foreground">
-              We've sent a verification code to {phone}
-            </p>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="otp">Verification Code</Label>
-            <Input
-              id="otp"
-              placeholder="Enter verification code"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              required
-            />
-          </div>
-          
-          <Button 
-            type="button" 
-            variant="outline" 
-            className="w-full flex items-center justify-center gap-2"
-            onClick={sendOtpAgain}
-          >
-            <RefreshCw size={16} /> Resend Code
-          </Button>
-        </div>
+        <OtpVerification 
+          phone={phone} 
+          otp={otp} 
+          setOtp={setOtp} 
+          sendOtpAgain={sendOtpAgain} 
+        />
       )}
       
       <Button type="submit" className="w-full btn-brand" disabled={isLoading}>

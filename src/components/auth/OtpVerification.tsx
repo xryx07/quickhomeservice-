@@ -8,6 +8,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useState, useEffect } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+import { authApi } from '@/api';
 
 interface OtpVerificationProps {
   phone: string;
@@ -19,6 +21,8 @@ interface OtpVerificationProps {
 const OtpVerification = ({ phone, otp, setOtp, sendOtpAgain }: OtpVerificationProps) => {
   const [timer, setTimer] = useState<number>(30);
   const [canResend, setCanResend] = useState<boolean>(false);
+  const [isResending, setIsResending] = useState<boolean>(false);
+  const { toast } = useToast();
 
   // Timer for OTP resend
   useEffect(() => {
@@ -32,12 +36,37 @@ const OtpVerification = ({ phone, otp, setOtp, sendOtpAgain }: OtpVerificationPr
     }
   }, [timer]);
 
-  // Handle OTP resend
-  const handleResendOtp = () => {
-    if (canResend) {
-      sendOtpAgain();
-      setTimer(30);
-      setCanResend(false);
+  // Handle OTP resend using API
+  const handleResendOtp = async () => {
+    if (canResend && !isResending) {
+      setIsResending(true);
+      try {
+        const result = await authApi.resendOtp(phone);
+        if (result.success) {
+          toast({
+            title: "Verification code sent",
+            description: `A new code has been sent to ${phone}`,
+          });
+          sendOtpAgain(); // Call the original function for any local state updates
+          setTimer(30);
+          setCanResend(false);
+        } else {
+          toast({
+            title: "Failed to send code",
+            description: result.message || "Please try again later",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        toast({
+          title: "Failed to send code",
+          description: "Could not send a new verification code. Please try again.",
+          variant: "destructive",
+        });
+        console.error('Failed to resend OTP:', error);
+      } finally {
+        setIsResending(false);
+      }
     }
   };
 
@@ -72,10 +101,14 @@ const OtpVerification = ({ phone, otp, setOtp, sendOtpAgain }: OtpVerificationPr
         variant="outline" 
         className="w-full flex items-center justify-center gap-2"
         onClick={handleResendOtp}
-        disabled={!canResend}
+        disabled={!canResend || isResending}
       >
-        <RefreshCw size={16} className={canResend ? '' : 'animate-spin'} /> 
-        {canResend ? 'Resend Code' : `Resend code in ${timer}s`}
+        <RefreshCw size={16} className={isResending || !canResend ? 'animate-spin' : ''} /> 
+        {isResending 
+          ? 'Sending...' 
+          : canResend 
+            ? 'Resend Code' 
+            : `Resend code in ${timer}s`}
       </Button>
     </div>
   );

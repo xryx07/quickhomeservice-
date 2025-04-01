@@ -1,4 +1,3 @@
-
 import { LoginRequest, VerifyOtpRequest, RegisterRequest, AuthResponse } from './types';
 
 const API_BASE_URL = 'https://api.quickhomeservice.com/v1';
@@ -53,6 +52,28 @@ export const authApi = {
     } catch (error) {
       console.error('OTP verification error:', error);
       throw error;
+    }
+  },
+
+  /**
+   * Resend OTP to user's phone
+   * @param phone User's phone number
+   * @returns Promise with status of OTP resent
+   */
+  resendOtp: async (phone: string): Promise<{ success: boolean; message: string }> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/resend-otp`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone }),
+      });
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Resend OTP error:', error);
+      throw new Error('Failed to resend OTP. Please try again.');
     }
   },
 
