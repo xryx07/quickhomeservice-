@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { MessageCircle, Send, X, Bot } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Textarea } from '@/components/ui/textarea';
 
 interface Message {
   id: string;
@@ -17,40 +16,43 @@ interface Message {
 const initialMessages: Message[] = [
   {
     id: '1',
-    text: 'Hello! I\'m your service assistant. How can I help you today?',
+    text: 'Hello, I\'m your professional service assistant. How can I help you today with your home service needs?',
     sender: 'bot',
     timestamp: new Date(),
   },
 ];
 
 const generateResponse = async (message: string): Promise<string> => {
-  // This is a simple mock response generator
-  // In a real application, you would connect to an AI API here
-  
-  const responses = [
-    "I understand your concern. Could you provide more details so I can assist you better?",
-    "Thank you for reaching out. Our team typically resolves this issue by scheduling a follow-up service. Would you like me to arrange that for you?",
-    "I'm looking into this issue. Have you tried the basic troubleshooting steps in our FAQ section?",
-    "I'd be happy to help with your service request. Could you confirm your booking ID or the service you're inquiring about?",
-    "This seems like a common issue with an easy fix. Let me guide you through the steps to resolve it.",
-  ];
+  // Professional response generator
   
   // Simulate processing time
   await new Promise(resolve => setTimeout(resolve, 1000));
   
-  // Generate a contextual response based on user input
+  // Generate contextual professional responses based on user input
   if (message.toLowerCase().includes('booking')) {
-    return "I can help you with your booking. Please share your booking ID, or tell me what service you'd like to book.";
+    return "I'd be happy to assist with your booking. Please provide your booking ID or the specific service you're interested in, and I'll guide you through the process efficiently.";
   } else if (message.toLowerCase().includes('cancel')) {
-    return "If you need to cancel a service, please provide your booking ID and reason. We can process cancellations 24 hours before the scheduled time.";
+    return "Regarding cancellations, our policy allows for free cancellations up to 24 hours before the scheduled service. Please provide your booking ID, and I'll process this for you immediately.";
   } else if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
-    return "Our service pricing depends on the specific service, location, and scope of work. You can find detailed pricing on each service page or I can help provide an estimate.";
+    return "Our pricing is transparent and competitive. Each service has a base rate with potential adjustments depending on the scope and complexity. You can find detailed pricing on each service page, or I can provide you with a custom quote if you share more details about your requirements.";
   } else if (message.toLowerCase().includes('provider') || message.toLowerCase().includes('professional')) {
-    return "All our service providers are verified professionals with training and experience. Would you like to know more about a specific provider?";
+    return "All our service providers undergo rigorous background checks and professional certification verification. They are experienced specialists in their respective fields with high customer satisfaction ratings. Would you like information about a specific provider?";
+  } else if (message.toLowerCase().includes('payment')) {
+    return "We accept all major credit/debit cards, UPI, and net banking options. Payment is processed securely after the service is completed to your satisfaction. Would you like to know more about our payment process?";
+  } else if (message.toLowerCase().includes('refund')) {
+    return "Our refund policy ensures your satisfaction. If you're not completely satisfied with the service, we offer a resolution within 48 hours, including partial or full refunds depending on the situation. Would you like me to elaborate on any specific aspect?";
+  } else if (message.toLowerCase().includes('thank')) {
+    return "You're welcome. It's my pleasure to assist you. If you have any more questions in the future, I'll be here to help. We appreciate your business and look forward to providing excellent service.";
+  } else if (message.toLowerCase().includes('availability') || message.toLowerCase().includes('schedule')) {
+    return "Our service professionals are available 7 days a week from 8 AM to 8 PM. You can book appointments based on your preferred date and time through our platform. May I help you schedule a service today?";
+  } else if (message.toLowerCase().includes('emergency')) {
+    return "We understand emergencies require immediate attention. For urgent plumbing, electrical, or other critical issues, we offer priority scheduling with same-day service in most areas. Would you like me to arrange an emergency service?";
+  } else if (message.toLowerCase().includes('quality') || message.toLowerCase().includes('guarantee')) {
+    return "We stand behind the quality of our work with a 30-day service guarantee. If any issues arise related to the service performed, we'll return to address them at no additional cost. Your satisfaction is our priority.";
   }
   
-  // Default to random response
-  return responses[Math.floor(Math.random() * responses.length)];
+  // Default professional response
+  return "Thank you for your message. I'd be happy to assist you with your home service needs. Could you please provide more specific details about your requirements so I can better address your needs?";
 };
 
 const ChatBot = () => {
@@ -104,7 +106,7 @@ const ChatBot = () => {
           <CardHeader className="bg-brand-600 text-white p-3 flex flex-row justify-between items-center">
             <div className="flex items-center">
               <Bot className="mr-2 h-5 w-5" />
-              <h3 className="font-medium">Service Assistant</h3>
+              <h3 className="font-medium">Professional Assistant</h3>
             </div>
             <Button 
               variant="ghost" 
