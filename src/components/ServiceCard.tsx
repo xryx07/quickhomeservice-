@@ -14,13 +14,19 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
   const { id, name, description, price, image, rating, providerId, providerName, features } = service;
   
   return (
-    <Card className="service-card overflow-hidden h-full flex flex-col">
+    <Card className="service-card overflow-hidden h-full flex flex-col hover:shadow-lg transition-all duration-300">
       <div className="relative h-48 overflow-hidden">
         <img 
           src={image} 
           alt={name} 
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
+        {/* Add a small badge for top rated services */}
+        {rating >= 4.7 && (
+          <div className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded-full">
+            Top Rated
+          </div>
+        )}
       </div>
       <CardHeader className="p-4">
         <div className="flex justify-between items-start">
@@ -38,13 +44,13 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
             <h4 className="text-sm font-medium mb-2">Features:</h4>
             <div className="flex flex-wrap gap-1.5">
               {features.slice(0, 4).map((feature, index) => (
-                <Badge key={index} variant="outline" className="text-xs bg-gray-50">
+                <Badge key={index} variant="outline" className="text-xs bg-gray-50 hover:bg-gray-100">
                   <Check size={10} className="text-green-500 mr-1 flex-shrink-0" />
                   {feature}
                 </Badge>
               ))}
               {features.length > 4 && (
-                <Badge variant="outline" className="text-xs bg-gray-50">
+                <Badge variant="outline" className="text-xs bg-gray-50 hover:bg-gray-100">
                   +{features.length - 4} more
                 </Badge>
               )}
