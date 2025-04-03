@@ -5,8 +5,15 @@ import ChatBotButton from './ChatBotButton';
 import ChatBotHeader from './ChatBotHeader';
 import ChatMessageList from './ChatMessageList';
 import ChatBotInput from './ChatBotInput';
-import { Message } from './types';
+import { Message, QuickReply } from './types';
 import { generateResponse } from '@/utils/chatResponseGenerator';
+
+const commonQuickReplies: QuickReply[] = [
+  { id: '1', text: 'Booking information' },
+  { id: '2', text: 'Cancellation policy' },
+  { id: '3', text: 'Pricing details' },
+  { id: '4', text: 'Payment options' },
+];
 
 const initialMessages: Message[] = [
   {
@@ -14,6 +21,7 @@ const initialMessages: Message[] = [
     text: 'Hello, I\'m your professional service assistant. How can I help you today with your home service needs?',
     sender: 'bot',
     timestamp: new Date(),
+    quickReplies: commonQuickReplies,
   },
 ];
 
@@ -41,10 +49,29 @@ const ChatBot = () => {
       text: response,
       sender: 'bot',
       timestamp: new Date(),
+      quickReplies: shouldShowQuickReplies(newMessageText, response) ? commonQuickReplies : undefined,
     };
     
     setMessages(prev => [...prev, botMessage]);
     setIsTyping(false);
+  };
+
+  const shouldShowQuickReplies = (userMessage: string, botResponse: string): boolean => {
+    // Show quick replies if the bot response doesn't already address specific topics
+    // or if it's a greeting or thank you message
+    const specificTopics = ['booking', 'cancel', 'price', 'payment', 'refund'];
+    const isSpecificResponse = specificTopics.some(topic => 
+      botResponse.toLowerCase().includes(topic)
+    );
+    
+    const isGreeting = /^(hello|hi|hey|greetings)/i.test(userMessage);
+    const isThanks = /thank|thanks/i.test(userMessage);
+    
+    return !isSpecificResponse || isGreeting || isThanks;
+  };
+
+  const handleQuickReplyClick = (replyText: string) => {
+    handleSendMessage(replyText);
   };
 
   const toggleChat = () => {
@@ -62,6 +89,7 @@ const ChatBot = () => {
             <ChatMessageList 
               messages={messages} 
               isTyping={isTyping} 
+              onQuickReplyClick={handleQuickReplyClick}
             />
           </CardContent>
           <CardFooter className="p-3 border-t">

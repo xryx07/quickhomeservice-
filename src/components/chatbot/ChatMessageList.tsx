@@ -7,9 +7,10 @@ import { Message } from './types';
 interface ChatMessageListProps {
   messages: Message[];
   isTyping: boolean;
+  onQuickReplyClick: (reply: string) => void;
 }
 
-const ChatMessageList = ({ messages, isTyping }: ChatMessageListProps) => {
+const ChatMessageList = ({ messages, isTyping, onQuickReplyClick }: ChatMessageListProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   // Auto-scroll to bottom when messages change
@@ -20,7 +21,11 @@ const ChatMessageList = ({ messages, isTyping }: ChatMessageListProps) => {
   return (
     <div className="h-80 overflow-y-auto p-4">
       {messages.map((message) => (
-        <ChatMessage key={message.id} message={message} />
+        <ChatMessage 
+          key={message.id} 
+          message={message} 
+          onQuickReplyClick={onQuickReplyClick}
+        />
       ))}
       {isTyping && <ChatTypingIndicator />}
       <div ref={messagesEndRef} />
