@@ -1,10 +1,10 @@
 
 import { useState, useEffect } from 'react';
-import { getAllServices } from '@/data/services';
-import { ServiceItem } from '@/utils/types';
+import { allServices } from '@/data/services';
+import { Service } from '@/utils/types';
 
 export const useServiceData = (refreshCounter = 0) => {
-  const [services, setServices] = useState<ServiceItem[] | null>(null);
+  const [services, setServices] = useState<Service[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -17,7 +17,8 @@ export const useServiceData = (refreshCounter = 0) => {
         // Add a small delay to simulate network request
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        const data = await getAllServices();
+        // Use allServices instead of getAllServices
+        const data = allServices;
         
         if (!data || data.length === 0) {
           throw new Error('No services available');
