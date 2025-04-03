@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import ChatBotButton from './ChatBotButton';
 import ChatBotHeader from './ChatBotHeader';
@@ -25,10 +25,42 @@ const initialMessages: Message[] = [
   },
 ];
 
+// Storage key for chat history
+const CHAT_HISTORY_KEY = 'chatbot_history';
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [isTyping, setIsTyping] = useState(false);
+
+  // Load chat history from localStorage on initial render
+  useEffect(() => {
+    const savedMessages = localStorage.getItem(CHAT_HISTORY_KEY);
+    if (savedMessages) {
+      try {
+        // Parse the saved messages and convert timestamp strings back to Date objects
+        const parsedMessages = JSON.parse(savedMessages).map((message: any) => ({
+          ...message,
+          timestamp: new Date(message.timestamp)
+        }));
+        
+        if (parsedMessages.length > 0) {
+          setMessages(parsedMessages);
+        }
+      } catch (error) {
+        console.error('Error parsing saved chat history:', error);
+        // If there's an error parsing, fall back to initial messages
+        setMessages(initialMessages);
+      }
+    }
+  }, []);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messages));
+    }
+  }, [messages]);
 
   const handleSendMessage = async (newMessageText: string) => {
     const userMessage: Message = {
@@ -78,12 +110,18 @@ const ChatBot = () => {
     setIsOpen(!isOpen);
   };
 
+  // Add function to clear chat history
+  const clearChatHistory = () => {
+    localStorage.removeItem(CHAT_HISTORY_KEY);
+    setMessages(initialMessages);
+  };
+
   return (
     <div className="fixed bottom-5 right-5 z-50">
       {isOpen ? (
         <Card className="w-80 md:w-96 shadow-lg">
           <CardHeader className="p-0">
-            <ChatBotHeader onClose={toggleChat} />
+            <ChatBotHeader onClose={toggleChat} onClearHistory={clearChatHistory} />
           </CardHeader>
           <CardContent className="p-0">
             <ChatMessageList 
