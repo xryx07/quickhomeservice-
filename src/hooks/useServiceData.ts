@@ -1,34 +1,41 @@
 
 import { useState, useEffect } from 'react';
-import { Service } from '@/utils/types';
+import { getAllServices } from '@/data/services';
+import { ServiceItem } from '@/utils/types';
 
-// Mock data for a single service
-const mockService: Service = {
-  id: "3",
-  name: "Premium House Cleaning",
-  category: "Cleaning",
-  description: "Our premium house cleaning service includes thorough cleaning of all rooms including kitchen, bathrooms, living areas, and bedrooms. We use eco-friendly cleaning products and professional equipment to ensure your home is spotless and hygienic. Our trained staff pays attention to every detail, from dusting ceiling fans to scrubbing baseboards. Perfect for regular maintenance or deep cleaning before special occasions.",
-  price: 799,
-  image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-  rating: 4.7,
-  providerId: "p1",
-  providerName: "CleanPro Services"
-};
+export const useServiceData = (refreshCounter = 0) => {
+  const [services, setServices] = useState<ServiceItem[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-export const useServiceData = (serviceId: string | undefined) => {
-  const [service, setService] = useState<Service | null>(null);
-  const [loading, setLoading] = useState(true);
-  
   useEffect(() => {
-    // In a real application, this would be an API call to fetch the service by ID
-    // Simulate an API call with setTimeout
-    const timer = setTimeout(() => {
-      setService(mockService);
-      setLoading(false);
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, [serviceId]);
-  
-  return { service, loading };
+    const fetchServices = async () => {
+      setIsLoading(true);
+      setError(null);
+      
+      try {
+        // Add a small delay to simulate network request
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const data = await getAllServices();
+        
+        if (!data || data.length === 0) {
+          throw new Error('No services available');
+        }
+        
+        setServices(data);
+      } catch (err) {
+        console.error('Error fetching services:', err);
+        setError(err instanceof Error ? err : new Error('Failed to fetch services'));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, [refreshCounter]);
+
+  return { services, isLoading, error };
 };
+
+export default useServiceData;
