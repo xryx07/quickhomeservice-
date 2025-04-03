@@ -2,7 +2,7 @@
 import { SlidersHorizontal } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import ChatBot from '@/components/ChatBot';
+import ChatBot from '@/components/chatbot';
 import { allServices, allCategories } from '@/data/services';
 import { useServiceFiltering } from '@/hooks/useServiceFiltering';
 import SearchBar from '@/components/services/SearchBar';
@@ -68,7 +68,11 @@ const Services = () => {
               />
               
               <div className="md:w-3/4 lg:w-4/5">
-                <ServicesList services={filteredServices} />
+                <ServicesList 
+                  category={selectedCategory !== 'All' ? selectedCategory : undefined}
+                  searchQuery={searchQuery}
+                  priceRange={priceRange}
+                />
               </div>
             </div>
           </div>

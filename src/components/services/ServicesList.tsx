@@ -4,6 +4,7 @@ import ServiceCard from '@/components/ServiceCard';
 import { useServiceData } from '@/hooks/useServiceData';
 import NoServicesMessage from './NoServicesMessage';
 import useServiceRefresh from '@/hooks/useServiceRefresh';
+import { Service } from '@/utils/types';
 
 interface ServicesListProps {
   category?: string;
@@ -14,7 +15,7 @@ interface ServicesListProps {
 const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) => {
   const { refreshCounter, handleRefresh } = useServiceRefresh();
   const { services, isLoading, error } = useServiceData(refreshCounter);
-  const [filteredServices, setFilteredServices] = useState(services);
+  const [filteredServices, setFilteredServices] = useState<Service[] | null>(null);
   
   // Filter services based on props
   useEffect(() => {
@@ -33,7 +34,7 @@ const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) 
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       result = result.filter(service => 
-        service.title.toLowerCase().includes(query) || 
+        service.name.toLowerCase().includes(query) || 
         service.description.toLowerCase().includes(query)
       );
     }
@@ -63,13 +64,13 @@ const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) 
     return <NoServicesMessage onRefresh={handleRefresh} isFiltered={false} />;
   }
   
-  if (filteredServices.length === 0) {
+  if (filteredServices && filteredServices.length === 0) {
     return <NoServicesMessage onRefresh={handleRefresh} isFiltered={true} />;
   }
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-      {filteredServices.map((service) => (
+      {filteredServices && filteredServices.map((service) => (
         <ServiceCard key={service.id} service={service} />
       ))}
     </div>

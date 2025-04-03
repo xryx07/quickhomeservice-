@@ -3,19 +3,19 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import ChatBot from '@/components/ChatBot';
+import ChatBot from '@/components/chatbot';
 import ServiceDetailContainer from '@/components/service-detail/ServiceDetailContainer';
-import { useServiceData } from '@/hooks/useServiceData';
+import { useServiceDetail } from '@/hooks/useServiceDetail';
 
 const ServiceDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { service, loading } = useServiceData(id);
+  const { service, isLoading, error } = useServiceDetail(id || '');
   
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-grow">
-        {loading ? (
+        {isLoading ? (
           <div className="container mx-auto py-12 px-4 text-center">
             <div className="animate-pulse">
               <div className="h-64 bg-gray-200 rounded-lg mb-4"></div>
