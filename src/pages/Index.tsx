@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { PaintBucket, Palette, PaintRoller, Check } from 'lucide-react';
 
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import { Service, Category } from '@/utils/types';
 import { allCategories } from '@/data/services';
+import { paintingServices } from '@/data/services/painting';
+import ChatBot from '@/components/chatbot';
 
 const Index = () => {
   return (
@@ -33,6 +36,96 @@ const Index = () => {
                   </Card>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Featured Painting Services */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-10">
+              <div>
+                <h2 className="text-3xl font-bold mb-2">Premium Painting Services</h2>
+                <p className="text-muted-foreground max-w-2xl">Transform your space with our professional painting services. We offer top-quality materials and expert craftsmanship.</p>
+              </div>
+              <Link to="/services?category=painting" className="mt-4 md:mt-0">
+                <Button variant="outline" className="border-2 border-black hover:bg-black hover:text-white transition-colors">
+                  View All Painting Services
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {paintingServices.slice(0, 3).map((service) => (
+                <Card key={service.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
+                  <div className="relative h-48">
+                    <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
+                    {service.rating >= 4.7 && (
+                      <div className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded-full">
+                        Top Rated
+                      </div>
+                    )}
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold text-lg mb-2">{service.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      {service.description}
+                    </p>
+                    <div className="mb-4">
+                      {service.features.slice(0, 3).map((feature, index) => (
+                        <div key={index} className="flex items-center mb-1">
+                          <Check size={14} className="text-green-600 mr-2" />
+                          <span className="text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="font-semibold">₹{service.price}</p>
+                      <Link to={`/services/${service.id}`}>
+                        <Button size="sm">Book Now</Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Painting Service Benefits */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Why Choose Our Painting Services?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 mb-4">
+                  <PaintBucket className="h-8 w-8 text-brand-600" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Premium Materials</h3>
+                <p className="text-muted-foreground">
+                  We use only high-quality paints and materials that ensure a long-lasting, beautiful finish for your home.
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 mb-4">
+                  <Palette className="h-8 w-8 text-brand-600" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Expert Color Consultation</h3>
+                <p className="text-muted-foreground">
+                  Receive professional color advice from our experienced designers to find the perfect palette for your space.
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 mb-4">
+                  <PaintRoller className="h-8 w-8 text-brand-600" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Skilled Professionals</h3>
+                <p className="text-muted-foreground">
+                  Our team of skilled painters delivers exceptional craftsmanship and attention to detail on every project.
+                </p>
+              </div>
             </div>
           </div>
         </section>
