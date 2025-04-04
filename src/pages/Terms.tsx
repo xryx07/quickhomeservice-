@@ -1,4 +1,3 @@
-
 import { FileText, Shield, ShieldCheck, Info } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -189,6 +188,8 @@ const Terms = () => {
                           <p>4.3 You are responsible for all taxes on income earned through our platform.</p>
                           <p>4.4 You agree not to accept direct payments from customers for services booked through our platform.</p>
                           <p>4.5 Payment disputes will be resolved according to our payment dispute resolution process.</p>
+                          <p>4.6 If a customer is not satisfied with your service, they may be eligible for a partial or full refund as determined by our customer satisfaction policy.</p>
+                          <p>4.7 Collecting payment directly from customers and failing to report it to the platform is strictly prohibited and will result in immediate termination of your account and possible legal action.</p>
                         </AccordionContent>
                       </AccordionItem>
                       
@@ -214,6 +215,52 @@ const Terms = () => {
                           <p>6.3 You may not represent yourself as an employee or representative of our platform.</p>
                           <p>6.4 You retain the right to provide services through other platforms or independently.</p>
                           <p>6.5 We reserve the right to modify these Provider Terms with reasonable notice.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="item-7">
+                        <AccordionTrigger className="text-lg font-medium">
+                          7. Service Quality and Performance
+                        </AccordionTrigger>
+                        <AccordionContent className="text-gray-700 space-y-2">
+                          <p>7.1 Service Quality Standards:</p>
+                          <p className="ml-6">7.1.1 You are expected to deliver services that meet or exceed the quality standards described in your service listing.</p>
+                          <p className="ml-6">7.1.2 If a customer is dissatisfied with your service, they may request a review by our customer satisfaction team.</p>
+                          <p className="ml-6">7.1.3 If the service is determined to be substantially below promised quality, you may receive only partial payment or no payment for the service.</p>
+                          
+                          <p>7.2 Performance Consequences:</p>
+                          <p className="ml-6">7.2.1 Consistent poor performance or customer dissatisfaction may result in reduced visibility of your services on our platform.</p>
+                          <p className="ml-6">7.2.2 Repeated failure to meet service standards may result in temporary suspension or permanent termination of your provider account.</p>
+                          <p className="ml-6">7.2.3 Direct violation of our terms, including fraudulent behavior, misrepresentation of services, or collecting payments outside the platform will result in immediate termination and potential legal action.</p>
+                          
+                          <p>7.3 Incentives for Excellence:</p>
+                          <p className="ml-6">7.3.1 Providers who maintain high ratings and customer satisfaction will be prioritized in search results and recommendations.</p>
+                          <p className="ml-6">7.3.2 Top-performing providers may qualify for reduced commission rates and promotional opportunities.</p>
+                          <p className="ml-6">7.3.3 Consistently high-rated providers will be eligible for our "Premium Provider" program, which includes additional benefits and increased work opportunities.</p>
+                          <p className="ml-6">7.3.4 Top-performing providers may receive priority for new service categories and market expansions.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="item-8">
+                        <AccordionTrigger className="text-lg font-medium">
+                          8. Dispute Resolution and Penalties
+                        </AccordionTrigger>
+                        <AccordionContent className="text-gray-700 space-y-2">
+                          <p>8.1 Service Disputes:</p>
+                          <p className="ml-6">8.1.1 All service quality disputes will be reviewed by our customer satisfaction team within 5 business days.</p>
+                          <p className="ml-6">8.1.2 The customer satisfaction team may request evidence from both the provider and the customer.</p>
+                          <p className="ml-6">8.1.3 Based on the review, the team may determine a full payment, partial payment, or no payment is warranted.</p>
+                          
+                          <p>8.2 Prohibited Conduct and Penalties:</p>
+                          <p className="ml-6">8.2.1 Soliciting customers to book services directly outside the platform is strictly prohibited.</p>
+                          <p className="ml-6">8.2.2 Collecting payments directly from customers for services booked through the platform will result in immediate account termination.</p>
+                          <p className="ml-6">8.2.3 Providing deliberately substandard services or engaging in unprofessional conduct may result in account suspension.</p>
+                          <p className="ml-6">8.2.4 False advertising or misrepresentation of qualifications or services will result in immediate removal of the service listing.</p>
+                          
+                          <p>8.3 Appeal Process:</p>
+                          <p className="ml-6">8.3.1 Providers may appeal decisions made by the customer satisfaction team within 10 business days.</p>
+                          <p className="ml-6">8.3.2 Appeals will be reviewed by a senior management team member.</p>
+                          <p className="ml-6">8.3.3 The decision made on appeal is final and binding.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
