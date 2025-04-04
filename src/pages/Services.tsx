@@ -71,7 +71,7 @@ const Services = () => {
                 <ServicesList 
                   category={selectedCategory !== 'All' ? selectedCategory : undefined}
                   searchQuery={searchQuery}
-                  priceRange={priceRange}
+                  priceRange={priceRange ? [priceRange[0], priceRange[1]] : undefined}
                 />
               </div>
             </div>
