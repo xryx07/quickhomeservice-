@@ -13,6 +13,7 @@ import AdminBookings from "./pages/AdminBookings";
 import UserProfile from "./pages/UserProfile";
 import ProviderProfile from "./pages/ProviderProfile";
 import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
 
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/provider/profile" element={<ProviderProfile />} />
             <Route path="/provider/bookings" element={<ProviderProfile />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<Terms />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
