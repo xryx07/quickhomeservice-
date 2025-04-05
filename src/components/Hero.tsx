@@ -24,7 +24,7 @@ const Hero = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             Fast and affordable repair services
           </h1>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-muted-foreground mb-8">
             Reliable in-home repair of all your systems and products. We arrive at your location promptly.
           </p>
           
@@ -32,11 +32,11 @@ const Hero = () => {
             <Input
               type="text"
               placeholder="Search for services..."
-              className="h-12 text-black w-full rounded-r-none text-lg"
+              className="h-12 w-full rounded-r-none text-lg"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <Button type="submit" className="h-12 px-6 rounded-l-none bg-blue-600 hover:bg-blue-700 text-white">
+            <Button type="submit" className="h-12 px-6 rounded-l-none btn-brand">
               <Search className="mr-2" size={18} />
               Search
             </Button>
@@ -44,16 +44,16 @@ const Hero = () => {
           
           <div className="space-y-3">
             <div className="flex items-center">
-              <CheckCircle size={20} className="text-blue-600 mr-2" />
-              <span className="text-gray-700">Swift responses</span>
+              <CheckCircle size={20} className="text-primary mr-2" />
+              <span className="text-foreground">Swift responses</span>
             </div>
             <div className="flex items-center">
-              <CheckCircle size={20} className="text-blue-600 mr-2" />
-              <span className="text-gray-700">Quality service</span>
+              <CheckCircle size={20} className="text-primary mr-2" />
+              <span className="text-foreground">Quality service</span>
             </div>
             <div className="flex items-center">
-              <CheckCircle size={20} className="text-blue-600 mr-2" />
-              <span className="text-gray-700">Affordable rates, no hidden fees</span>
+              <CheckCircle size={20} className="text-primary mr-2" />
+              <span className="text-foreground">Affordable rates, no hidden fees</span>
             </div>
           </div>
         </div>
@@ -69,37 +69,37 @@ const Hero = () => {
       </div>
       
       {/* Service highlights section */}
-      <div className="bg-gray-50 py-12">
+      <div className="bg-secondary py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+            <div className="bg-background p-6 rounded-lg shadow-sm text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <h3 className="font-semibold mb-2">Free diagnostics</h3>
-              <p className="text-sm text-gray-600">We identify the issue with your device at no extra cost to ensure transparent pricing.</p>
+              <p className="text-sm text-muted-foreground">We identify the issue with your device at no extra cost to ensure transparent pricing.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+            <div className="bg-background p-6 rounded-lg shadow-sm text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <h3 className="font-semibold mb-2">Fast repair</h3>
-              <p className="text-sm text-gray-600">Most repairs are completed within the same day to minimize disruption to your daily life.</p>
+              <p className="text-sm text-muted-foreground">Most repairs are completed within the same day to minimize disruption to your daily life.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+            <div className="bg-background p-6 rounded-lg shadow-sm text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
               <h3 className="font-semibold mb-2">Satisfaction guaranteed</h3>
-              <p className="text-sm text-gray-600">We stand behind our work and ensure your complete satisfaction with every service.</p>
+              <p className="text-sm text-muted-foreground">We stand behind our work and ensure your complete satisfaction with every service.</p>
             </div>
           </div>
         </div>

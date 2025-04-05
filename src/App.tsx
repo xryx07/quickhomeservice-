@@ -16,6 +16,7 @@ import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
+import { ThemeProvider } from "./components/theme-provider";
 
 const App = () => {
   // Move the QueryClient initialization inside the component
@@ -23,27 +24,29 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:id" element={<ServiceDetail />} />
-            <Route path="/become-provider" element={<ProviderOnboarding />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/bookings" element={<AdminBookings />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/provider/profile" element={<ProviderProfile />} />
-            <Route path="/provider/bookings" element={<ProviderProfile />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/terms" element={<Terms />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/:id" element={<ServiceDetail />} />
+              <Route path="/become-provider" element={<ProviderOnboarding />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/bookings" element={<AdminBookings />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/provider/profile" element={<ProviderProfile />} />
+              <Route path="/provider/bookings" element={<ProviderProfile />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/terms" element={<Terms />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

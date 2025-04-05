@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, Search, User, LogIn, Home, Briefcase, Phone } from 'lucide-react';
 import { AuthModal } from './auth';
 import { useToast } from '@/components/ui/use-toast';
+import { ThemeToggle } from './theme-toggle';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,12 +40,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm">
+    <nav className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <h1 className="text-2xl font-bold text-brand-600">QuickHomeService</h1>
+              <h1 className="text-2xl font-bold">QuickHomeService</h1>
             </Link>
           </div>
           
@@ -64,28 +65,30 @@ const Navigation = () => {
           </div>
           
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
+            
             {isAuthenticated ? (
               <>
                 <div className="relative group">
                   <Button variant="ghost" className="flex items-center gap-2">
                     <User size={18} /> My Account
                   </Button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg invisible group-hover:visible transition-all">
+                  <div className="absolute right-0 mt-2 w-48 bg-background rounded-md shadow-lg invisible group-hover:visible transition-all border border-border">
                     <div className="py-1">
-                      <Link to={userRole === 'provider' ? '/provider/profile' : '/profile'} className="block px-4 py-2 hover:bg-gray-100">
+                      <Link to={userRole === 'provider' ? '/provider/profile' : '/profile'} className="block px-4 py-2 hover:bg-muted">
                         Profile
                       </Link>
                       {userRole === 'admin' && (
-                        <Link to="/admin" className="block px-4 py-2 hover:bg-gray-100">
+                        <Link to="/admin" className="block px-4 py-2 hover:bg-muted">
                           Admin Dashboard
                         </Link>
                       )}
                       {userRole === 'provider' && (
-                        <Link to="/provider/dashboard" className="block px-4 py-2 hover:bg-gray-100">
+                        <Link to="/provider/dashboard" className="block px-4 py-2 hover:bg-muted">
                           Provider Dashboard
                         </Link>
                       )}
-                      <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+                      <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-muted">
                         Logout
                       </button>
                     </div>
@@ -102,9 +105,12 @@ const Navigation = () => {
             )}
           </div>
           
-          <button onClick={toggleMenu} className="md:hidden">
-            <Menu size={24} />
-          </button>
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <button onClick={toggleMenu}>
+              <Menu size={24} />
+            </button>
+          </div>
         </div>
         
         {/* Mobile menu */}
