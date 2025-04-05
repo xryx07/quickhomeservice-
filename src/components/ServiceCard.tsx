@@ -13,6 +13,8 @@ interface ServiceCardProps {
 const ServiceCard = ({ service }: ServiceCardProps) => {
   const { id, name, description, price, image, rating, providerId, providerName, features } = service;
   
+  const fallbackImageUrl = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
+  
   return (
     <Card className="service-card overflow-hidden h-full flex flex-col hover:shadow-lg transition-all duration-300">
       <div className="relative h-48 overflow-hidden">
@@ -20,6 +22,9 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
           src={image} 
           alt={name} 
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = fallbackImageUrl;
+          }}
         />
         {/* Add a small badge for top rated services */}
         {rating >= 4.7 && (
@@ -31,7 +36,7 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
       <CardHeader className="p-4">
         <div className="flex justify-between items-start">
           <h3 className="text-lg font-semibold">{name}</h3>
-          <div className="flex items-center bg-gray-100 px-2 py-1 rounded text-sm">
+          <div className="flex items-center bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm">
             <Star size={14} className="text-yellow-500 mr-1" fill="currentColor" />
             <span>{rating.toFixed(1)}</span>
           </div>
@@ -44,13 +49,13 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
             <h4 className="text-sm font-medium mb-2">Features:</h4>
             <div className="flex flex-wrap gap-1.5">
               {features.slice(0, 4).map((feature, index) => (
-                <Badge key={index} variant="outline" className="text-xs bg-gray-50 hover:bg-gray-100">
+                <Badge key={index} variant="outline" className="text-xs bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                   <Check size={10} className="text-green-500 mr-1 flex-shrink-0" />
                   {feature}
                 </Badge>
               ))}
               {features.length > 4 && (
-                <Badge variant="outline" className="text-xs bg-gray-50 hover:bg-gray-100">
+                <Badge variant="outline" className="text-xs bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                   +{features.length - 4} more
                 </Badge>
               )}

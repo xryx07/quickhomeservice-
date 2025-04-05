@@ -5,6 +5,8 @@ import { useServiceData } from '@/hooks/useServiceData';
 import NoServicesMessage from './NoServicesMessage';
 import useServiceRefresh from '@/hooks/useServiceRefresh';
 import { Service } from '@/utils/types';
+import { fallbackImages } from '@/utils/imageUtils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ServicesListProps {
   category?: string;
@@ -47,14 +49,35 @@ const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) 
       );
     }
     
+    // Make sure all services have valid images
+    result = result.map(service => {
+      if (!service.image || !service.image.startsWith('http')) {
+        // Use category-specific fallback if available
+        return {
+          ...service,
+          image: fallbackImages[service.category as keyof typeof fallbackImages] || fallbackImages.default
+        };
+      }
+      return service;
+    });
+    
     setFilteredServices(result);
   }, [services, category, searchQuery, priceRange]);
   
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 animate-pulse">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="bg-gray-100 rounded-lg h-72"></div>
+          <div key={i} className="space-y-3">
+            <Skeleton className="h-48 w-full rounded-lg" />
+            <Skeleton className="h-6 w-3/4" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+            <div className="flex justify-between pt-2">
+              <Skeleton className="h-8 w-16" />
+              <Skeleton className="h-8 w-24" />
+            </div>
+          </div>
         ))}
       </div>
     );
