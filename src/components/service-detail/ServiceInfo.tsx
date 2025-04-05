@@ -3,6 +3,7 @@ import React from 'react';
 import { Star } from 'lucide-react';
 import { Service } from '@/utils/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Image } from '@/components/ui/image';
 
 interface ServiceInfoProps {
   service: Service;
@@ -12,13 +13,12 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
   return (
     <div>
       <div className="relative rounded-lg overflow-hidden h-[300px]">
-        <img
+        <Image
           src={service.image}
           alt={service.name}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.currentTarget.src = "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
-          }}
+          className="w-full h-full"
+          fallbackCategory="service"
+          aspectRatio="wide"
         />
       </div>
       

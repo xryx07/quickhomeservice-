@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Star, Clock, Check } from 'lucide-react';
 import { Service } from '@/utils/types';
 import { Badge } from '@/components/ui/badge';
+import { Image } from '@/components/ui/image';
 
 interface ServiceCardProps {
   service: Service;
@@ -13,18 +14,15 @@ interface ServiceCardProps {
 const ServiceCard = ({ service }: ServiceCardProps) => {
   const { id, name, description, price, image, rating, providerId, providerName, features } = service;
   
-  const fallbackImageUrl = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
-  
   return (
     <Card className="service-card overflow-hidden h-full flex flex-col hover:shadow-lg transition-all duration-300">
       <div className="relative h-48 overflow-hidden">
-        <img 
+        <Image 
           src={image} 
           alt={name} 
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          onError={(e) => {
-            e.currentTarget.src = fallbackImageUrl;
-          }}
+          className="w-full h-full"
+          fallbackCategory={service.category as keyof typeof import('@/utils/imageUtils').fallbackImages}
+          aspectRatio="wide"
         />
         {/* Add a small badge for top rated services */}
         {rating >= 4.7 && (

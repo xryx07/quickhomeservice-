@@ -7,6 +7,7 @@ import useServiceRefresh from '@/hooks/useServiceRefresh';
 import { Service } from '@/utils/types';
 import { fallbackImages } from '@/utils/imageUtils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Image } from '@/components/ui/image';
 
 interface ServicesListProps {
   category?: string;

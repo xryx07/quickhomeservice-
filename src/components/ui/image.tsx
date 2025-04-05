@@ -8,12 +8,26 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackCategory?: keyof typeof fallbackImages;
   fallbackSrc?: string;
   showLoadingState?: boolean;
+  aspectRatio?: "square" | "video" | "wide" | number;
 }
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, src, alt, fallbackCategory, fallbackSrc, showLoadingState = true, ...props }, ref) => {
+  ({ className, src, alt, fallbackCategory, fallbackSrc, showLoadingState = true, aspectRatio, ...props }, ref) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
+    
+    // Determine aspect ratio class
+    const getAspectRatioClass = () => {
+      if (!aspectRatio) return "";
+      if (typeof aspectRatio === "number") return `aspect-[${aspectRatio}]`;
+      
+      switch (aspectRatio) {
+        case "square": return "aspect-square";
+        case "video": return "aspect-video";
+        case "wide": return "aspect-[16/9]";
+        default: return "";
+      }
+    };
     
     // Determine fallback source
     const determineFallback = () => {
@@ -25,13 +39,13 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     };
     
     return (
-      <div className={cn("relative", className)}>
+      <div className={cn("relative overflow-hidden", getAspectRatioClass(), className)}>
         {isLoading && showLoadingState && (
           <Skeleton className="absolute inset-0 rounded-md" />
         )}
         
         <img
-          className={cn("max-w-full h-auto", className)}
+          className={cn("max-w-full h-auto object-cover", hasError ? "opacity-100" : "opacity-0", !isLoading && "opacity-100", "transition-opacity duration-300")}
           ref={ref}
           src={hasError ? determineFallback() : src}
           alt={alt || "Image"}
