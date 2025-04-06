@@ -18,7 +18,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
     
   return (
     <div>
-      <div className="relative rounded-lg overflow-hidden h-[300px]">
+      <div className="relative rounded-lg overflow-hidden h-[300px] border border-border shadow-sm">
         <Image
           src={serviceImage}
           alt={service.name}
@@ -32,7 +32,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
       <div className="mt-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">{service.name}</h1>
-          <div className="flex items-center bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded">
+          <div className="flex items-center bg-secondary px-3 py-1 rounded">
             <Star size={16} className="text-yellow-500 mr-1" fill="currentColor" />
             <span className="font-medium">{service.rating.toFixed(1)}</span>
           </div>

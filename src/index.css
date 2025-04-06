@@ -93,6 +93,10 @@
   body {
     @apply bg-background text-foreground transition-colors duration-300;
   }
+  
+  html.dark {
+    color-scheme: dark;
+  }
 }
 
 @layer components {
@@ -151,5 +155,33 @@
   
   .dark .shadow-sm {
     @apply shadow-gray-800;
+  }
+  
+  /* Fix for "How It Works" section */
+  .dark .w-16.h-16.rounded-full.bg-blue-600 {
+    @apply bg-blue-800 border border-blue-700;
+  }
+
+  /* Enhanced contrast for text on colored backgrounds */
+  .dark .bg-blue-600.text-white h2,
+  .dark .bg-blue-600.text-white p,
+  .dark .bg-blue-800.text-white h2,
+  .dark .bg-blue-800.text-white p {
+    @apply text-white text-opacity-95 font-medium;
+  }
+  
+  /* Fix for feature cards in dark mode */
+  .dark .bg-blue-100.flex.items-center.justify-center.text-blue-600 {
+    @apply bg-blue-900 text-blue-300;
+  }
+  
+  /* Fix for "How it works" section numbers */
+  .dark .bg-blue-600.text-white.flex.items-center.justify-center {
+    @apply bg-blue-700 text-white border border-blue-600;
+  }
+  
+  /* Make sure service image container has proper contrast */
+  .dark .relative.rounded-lg.overflow-hidden {
+    @apply border border-gray-800 shadow-md;
   }
 }

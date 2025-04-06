@@ -47,6 +47,9 @@ export function ThemeProvider({
     }
     
     root.classList.add(theme);
+    
+    // Force update the HTML attribute for immediate styling
+    document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   const value = {

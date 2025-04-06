@@ -6,11 +6,17 @@ import { useTheme } from "./theme-provider";
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+    // Force a reflow to ensure styles are applied
+    document.documentElement.style.transition = 'background-color 0.3s ease';
+  };
+
   return (
     <Button
       variant="outline"
       size="icon"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={toggleTheme}
       aria-label="Toggle theme"
       className="h-9 w-9 rounded-full border-primary/20 bg-background hover:bg-secondary/80 transition-all"
     >
