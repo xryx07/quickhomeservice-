@@ -62,7 +62,7 @@
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 75%;
+    --muted-foreground: 240 5% 84%;
 
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
@@ -127,5 +127,29 @@
   
   .dark .bg-gray-100 {
     @apply bg-gray-800;
+  }
+  
+  .dark .text-gray-600 {
+    @apply text-gray-300;
+  }
+  
+  .dark .bg-blue-600 {
+    @apply bg-blue-800;
+  }
+  
+  .dark .bg-blue-100 {
+    @apply bg-blue-900;
+  }
+  
+  .dark .text-blue-600 {
+    @apply text-blue-300;
+  }
+  
+  .dark .bg-white {
+    @apply bg-gray-900;
+  }
+  
+  .dark .shadow-sm {
+    @apply shadow-gray-800;
   }
 }

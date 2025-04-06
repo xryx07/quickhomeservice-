@@ -22,7 +22,7 @@ const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
         <Image
           src={serviceImage}
           alt={service.name}
-          className="w-full h-full"
+          className="w-full h-full object-cover"
           fallbackCategory={service.category}
           withAspectRatio
           aspectRatio="wide"
