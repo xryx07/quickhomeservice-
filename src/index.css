@@ -125,63 +125,72 @@
     @apply border border-gray-800 hover:border-gray-700;
   }
   
+  /* Direct color assignments instead of circular @apply */
   .dark .bg-gray-50 {
-    @apply bg-gray-900;
+    background-color: theme('colors.gray.900');
   }
   
   .dark .bg-gray-100 {
-    @apply bg-gray-800;
+    background-color: theme('colors.gray.800');
   }
   
   .dark .text-gray-600 {
-    @apply text-gray-300;
+    color: theme('colors.gray.300');
   }
   
   .dark .bg-blue-600 {
-    @apply bg-blue-800;
+    background-color: theme('colors.blue.800');
   }
   
   .dark .bg-blue-100 {
-    @apply bg-blue-900;
+    background-color: theme('colors.blue.900');
   }
   
   .dark .text-blue-600 {
-    @apply text-blue-300;
+    color: theme('colors.blue.300');
   }
   
   .dark .bg-white {
-    @apply bg-gray-900;
+    background-color: theme('colors.gray.900');
   }
   
   .dark .shadow-sm {
-    @apply shadow-gray-800;
+    box-shadow: theme('boxShadow.sm');
+    --tw-shadow-color: theme('colors.gray.800');
   }
   
-  /* Fix for "How It Works" section */
+  /* Fix for "How It Works" section - avoid circular @apply */
   .dark .w-16.h-16.rounded-full.bg-blue-600 {
-    @apply bg-blue-800 border border-blue-700;
+    background-color: theme('colors.blue.800');
+    border: 1px solid theme('colors.blue.700');
   }
 
-  /* Enhanced contrast for text on colored backgrounds */
+  /* Enhanced contrast for text on colored backgrounds - avoid circular @apply */
   .dark .bg-blue-600.text-white h2,
   .dark .bg-blue-600.text-white p,
   .dark .bg-blue-800.text-white h2,
   .dark .bg-blue-800.text-white p {
-    @apply text-white text-opacity-95 font-medium;
+    color: white;
+    opacity: 0.95;
+    font-weight: 500; /* font-medium equivalent */
   }
   
-  /* Fix for feature cards in dark mode */
+  /* Fix for feature cards in dark mode - avoid circular @apply */
   .dark .bg-blue-100.flex.items-center.justify-center.text-blue-600 {
-    @apply bg-blue-900 text-blue-300;
+    background-color: theme('colors.blue.900');
+    color: theme('colors.blue.300');
   }
   
-  /* Fix for "How it works" section numbers */
+  /* Fix for "How it works" section numbers - avoid circular @apply */
   .dark .bg-blue-600.text-white.flex.items-center.justify-center {
-    @apply bg-blue-700 text-white border border-blue-600;
+    background-color: theme('colors.blue.700');
+    color: white;
+    border: 1px solid theme('colors.blue.600');
   }
   
-  /* Make sure service image container has proper contrast */
+  /* Make sure service image container has proper contrast - avoid circular @apply */
   .dark .relative.rounded-lg.overflow-hidden {
-    @apply border border-gray-800 shadow-md;
+    border: 1px solid theme('colors.gray.800');
+    box-shadow: theme('boxShadow.md');
   }
 }
