@@ -60,11 +60,11 @@ const ProviderOnboarding = () => {
   const [agreementSigned, setAgreementSigned] = useState(false);
   
   useEffect(() => {
-    // Show the agreement at step 1
-    if (step === 1 && !agreementSigned) {
+    // Show the agreement after completing documentation step
+    if (step === 3 && adhaarVerified && panVerified && !agreementSigned) {
       setShowAgreement(true);
     }
-  }, [step, agreementSigned]);
+  }, [step, adhaarVerified, panVerified, agreementSigned]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -170,11 +170,15 @@ const ProviderOnboarding = () => {
   const handleAgreementSigned = () => {
     setAgreementSigned(true);
     setShowAgreement(false);
+    setAgreedToTerms(true);
     
     toast({
       title: "Agreement Signed",
       description: "You have successfully signed the provider agreement.",
     });
+    
+    // Auto-advance to banking details step
+    setStep(4);
   };
   
   const handleNext = () => {
@@ -205,6 +209,9 @@ const ProviderOnboarding = () => {
         });
         return;
       }
+      
+      // Don't advance - agreement will show automatically
+      return;
     }
     
     setStep(prev => prev + 1);
@@ -245,6 +252,99 @@ const ProviderOnboarding = () => {
     setTimeout(() => {
       navigate('/provider-confirmation');
     }, 2000);
+  };
+  
+  const handleCategoryToggle = (category: string) => {
+    setFormData(prev => {
+      const updatedCategories = prev.serviceCategories.includes(category)
+        ? prev.serviceCategories.filter(c => c !== category)
+        : [...prev.serviceCategories, category];
+      
+      return {
+        ...prev,
+        serviceCategories: updatedCategories
+      };
+    });
+  };
+  
+  const handleVerifyPhone = () => {
+    if (!formData.phone) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter your phone number",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setShowPhoneOtp(true);
+    
+    toast({
+      title: "Verification Code Sent",
+      description: `We've sent a verification code to ${formData.phone}`,
+    });
+  };
+  
+  const handleVerifyEmail = () => {
+    if (!formData.email) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter your email address",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setShowEmailOtp(true);
+    
+    toast({
+      title: "Verification Code Sent",
+      description: `We've sent a verification code to ${formData.email}`,
+    });
+  };
+  
+  const handleVerifyAdhaar = () => {
+    if (!formData.adhaarNumber) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter your Aadhaar number",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setShowAdhaarOtp(true);
+    
+    toast({
+      title: "Verification Code Sent",
+      description: `We've sent a verification code to the phone number linked with your Aadhaar`,
+    });
+  };
+  
+  const handleVerifyPan = () => {
+    if (!formData.panNumber) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter your PAN number",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setShowPanOtp(true);
+    
+    toast({
+      title: "Verification Code Sent",
+      description: `We've sent a verification code to verify your PAN details`,
+    });
+  };
+  
+  const handleFileUpload = (fieldName: string) => {
+    // Mock file upload
+    toast({
+      title: "File Uploaded",
+      description: "Your document has been uploaded successfully.",
+    });
   };
   
   const categories = [
@@ -720,28 +820,27 @@ const ProviderOnboarding = () => {
                           />
                         </div>
                         
-                        <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-800/50 flex items-start space-x-3">
-                          <Shield className="text-brand-600 dark:text-brand-400 h-6 w-6 mt-0.5" />
-                          <div>
-                            <h4 className="font-medium mb-2">Agreement Confirmation</h4>
-                            <p className="text-sm text-muted-foreground mb-4">
-                              You have digitally signed the Provider Agreement that includes the 25% commission terms and platform policies.
-                            </p>
-                            <div className="flex items-start space-x-2">
-                              <Checkbox 
-                                id="terms" 
-                                checked={agreedToTerms}
-                                onCheckedChange={(checked) => setAgreedToTerms(!!checked)}
-                              />
-                              <Label 
-                                htmlFor="terms" 
-                                className="text-sm leading-tight cursor-pointer"
-                              >
-                                I confirm my acceptance of the agreement and that all information provided is accurate and complete.
-                              </Label>
+                        {agreementSigned && (
+                          <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-800/50 flex items-start space-x-3">
+                            <Shield className="text-green-600 dark:text-green-400 h-6 w-6 mt-0.5" />
+                            <div>
+                              <h4 className="font-medium mb-2">Agreement Signed</h4>
+                              <p className="text-sm text-muted-foreground">
+                                You have digitally signed the Provider Agreement that includes the 25% commission terms and platform policies.
+                              </p>
+                              <div className="mt-3">
+                                <Button 
+                                  type="button" 
+                                  variant="outline" 
+                                  size="sm"
+                                  onClick={() => setShowAgreement(true)}
+                                >
+                                  View Agreement Again
+                                </Button>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </>
                   )}
