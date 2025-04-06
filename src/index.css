@@ -138,31 +138,39 @@
     color: theme('colors.gray.300');
   }
   
-  .dark .bg-blue-600 {
-    background-color: theme('colors.blue.800');
+  /* Replace blue with black in How It Works section */
+  .w-16.h-16.rounded-full.bg-blue-600, 
+  .bg-blue-600.text-white.flex.items-center.justify-center {
+    background-color: #000000;
   }
   
-  .dark .bg-blue-100 {
-    background-color: theme('colors.blue.900');
+  /* Replace blue with black in Join Network section */
+  .bg-blue-600.text-white {
+    background-color: #000000;
   }
   
-  .dark .text-blue-600 {
-    color: theme('colors.blue.300');
+  /* Replace other blue instances */
+  .bg-blue-100 {
+    background-color: #f8f8f8;
   }
   
-  .dark .bg-white {
-    background-color: theme('colors.gray.900');
+  .text-blue-600 {
+    color: #000000;
   }
   
-  .dark .shadow-sm {
-    box-shadow: theme('boxShadow.sm');
-    --tw-shadow-color: theme('colors.gray.800');
+  .bg-blue-600 {
+    background-color: #000000;
   }
   
-  /* Fix for "How It Works" section - avoid circular @apply */
+  /* Button hover states */
+  .hover\:bg-blue-700:hover {
+    background-color: #333333 !important;
+  }
+  
+  /* Dark mode adjustments */
   .dark .w-16.h-16.rounded-full.bg-blue-600 {
-    background-color: theme('colors.blue.800');
-    border: 1px solid theme('colors.blue.700');
+    background-color: #333333;
+    border: 1px solid #444444;
   }
 
   /* Enhanced contrast for text on colored backgrounds - avoid circular @apply */
@@ -177,15 +185,15 @@
   
   /* Fix for feature cards in dark mode - avoid circular @apply */
   .dark .bg-blue-100.flex.items-center.justify-center.text-blue-600 {
-    background-color: theme('colors.blue.900');
-    color: theme('colors.blue.300');
+    background-color: theme('colors.gray.800');
+    color: theme('colors.gray.300');
   }
   
   /* Fix for "How it works" section numbers - avoid circular @apply */
   .dark .bg-blue-600.text-white.flex.items-center.justify-center {
-    background-color: theme('colors.blue.700');
+    background-color: #333333;
     color: white;
-    border: 1px solid theme('colors.blue.600');
+    border: 1px solid #444444;
   }
   
   /* Make sure service image container has proper contrast - avoid circular @apply */
