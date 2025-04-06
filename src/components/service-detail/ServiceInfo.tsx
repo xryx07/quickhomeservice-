@@ -4,20 +4,27 @@ import { Star } from 'lucide-react';
 import { Service } from '@/utils/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Image } from '@/components/ui/image';
+import { getServiceImage } from '@/utils/imageUtils';
 
 interface ServiceInfoProps {
   service: Service;
 }
 
 const ServiceInfo: React.FC<ServiceInfoProps> = ({ service }) => {
+  // Get appropriate image based on service category
+  const serviceImage = service.image && service.image.startsWith('http') 
+    ? service.image 
+    : getServiceImage(service.category);
+    
   return (
     <div>
       <div className="relative rounded-lg overflow-hidden h-[300px]">
         <Image
-          src={service.image}
+          src={serviceImage}
           alt={service.name}
           className="w-full h-full"
-          fallbackCategory="service"
+          fallbackCategory={service.category}
+          withAspectRatio
           aspectRatio="wide"
         />
       </div>

@@ -62,7 +62,7 @@
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted-foreground: 240 5% 75%;
 
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
@@ -110,5 +110,22 @@
 
   .glass-card {
     @apply bg-background/80 backdrop-blur-sm border border-border shadow-sm;
+  }
+  
+  /* Improve dark mode text visibility */
+  .dark .text-muted-foreground {
+    @apply text-opacity-90;
+  }
+  
+  .dark .service-card {
+    @apply border border-gray-800 hover:border-gray-700;
+  }
+  
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
+  
+  .dark .bg-gray-100 {
+    @apply bg-gray-800;
   }
 }

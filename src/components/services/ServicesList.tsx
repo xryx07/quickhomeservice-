@@ -5,9 +5,8 @@ import { useServiceData } from '@/hooks/useServiceData';
 import NoServicesMessage from './NoServicesMessage';
 import useServiceRefresh from '@/hooks/useServiceRefresh';
 import { Service } from '@/utils/types';
-import { fallbackImages } from '@/utils/imageUtils';
+import { getServiceImage } from '@/utils/imageUtils';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Image } from '@/components/ui/image';
 
 interface ServicesListProps {
   category?: string;
@@ -53,10 +52,10 @@ const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) 
     // Make sure all services have valid images
     result = result.map(service => {
       if (!service.image || !service.image.startsWith('http')) {
-        // Use category-specific fallback if available
+        // Use category-specific image
         return {
           ...service,
-          image: fallbackImages[service.category as keyof typeof fallbackImages] || fallbackImages.default
+          image: getServiceImage(service.category)
         };
       }
       return service;
@@ -69,14 +68,21 @@ const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) 
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="space-y-3">
-            <Skeleton className="h-48 w-full rounded-lg" />
-            <Skeleton className="h-6 w-3/4" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-5/6" />
-            <div className="flex justify-between pt-2">
-              <Skeleton className="h-8 w-16" />
-              <Skeleton className="h-8 w-24" />
+          <div key={i} className="space-y-3 bg-card rounded-lg overflow-hidden border">
+            <Skeleton className="h-48 w-full" />
+            <div className="p-4">
+              <Skeleton className="h-6 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-full mb-1" />
+              <Skeleton className="h-4 w-5/6 mb-4" />
+              <div className="flex flex-wrap gap-1 mb-4">
+                {[...Array(3)].map((_, j) => (
+                  <Skeleton key={j} className="h-5 w-16 rounded-full" />
+                ))}
+              </div>
+              <div className="flex justify-between pt-2 border-t dark:border-gray-700">
+                <Skeleton className="h-8 w-16" />
+                <Skeleton className="h-8 w-24" />
+              </div>
             </div>
           </div>
         ))}
