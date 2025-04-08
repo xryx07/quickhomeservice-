@@ -10,6 +10,9 @@ interface ServiceOverviewProps {
 }
 
 const ServiceOverview = ({ service, onBookNow }: ServiceOverviewProps) => {
+  // Create a fallback empty array for includes if it doesn't exist on the service
+  const includedItems = service.features?.slice(0, 3) || [];
+  
   return (
     <div className="space-y-8">
       <div className="relative rounded-lg overflow-hidden">
@@ -34,7 +37,7 @@ const ServiceOverview = ({ service, onBookNow }: ServiceOverviewProps) => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Service Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {service.features.map((feature, index) => (
+              {service.features?.map((feature, index) => (
                 <div key={index} className="flex items-center dark:text-gray-300">
                   <Check className="h-5 w-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0" />
                   <span>{feature}</span>
@@ -56,7 +59,7 @@ const ServiceOverview = ({ service, onBookNow }: ServiceOverviewProps) => {
               
               <div className="space-y-3 mt-6">
                 <h3 className="font-medium">What's included:</h3>
-                {service.includes?.map((item, index) => (
+                {includedItems.map((item, index) => (
                   <div key={index} className="flex items-center text-sm dark:text-gray-300">
                     <Check className="h-4 w-4 text-green-500 dark:text-green-400 mr-2 flex-shrink-0" />
                     <span>{item}</span>

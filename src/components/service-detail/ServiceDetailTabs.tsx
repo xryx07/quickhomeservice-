@@ -5,6 +5,7 @@ import { Service } from '@/utils/types';
 import ServiceOverview from './ServiceOverview';
 import ProviderDetails from './ProviderDetails';
 import ReviewsTab from './ReviewsTab';
+import { useToast } from '@/hooks/use-toast';
 
 interface ServiceDetailTabsProps {
   service: Service;
@@ -12,6 +13,16 @@ interface ServiceDetailTabsProps {
 
 const ServiceDetailTabs: React.FC<ServiceDetailTabsProps> = ({ service }) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const { toast } = useToast();
+  
+  // Add a handler for the book now button
+  const handleBookNow = () => {
+    toast({
+      title: "Booking initiated",
+      description: "You're being redirected to the booking form",
+    });
+    // In a real implementation, this might navigate to a booking page or open a modal
+  };
   
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -22,7 +33,7 @@ const ServiceDetailTabs: React.FC<ServiceDetailTabsProps> = ({ service }) => {
       </TabsList>
       
       <TabsContent value="overview" className="space-y-4">
-        <ServiceOverview service={service} />
+        <ServiceOverview service={service} onBookNow={handleBookNow} />
       </TabsContent>
       
       <TabsContent value="provider">
