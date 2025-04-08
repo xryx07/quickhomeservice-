@@ -45,8 +45,18 @@ const ServicesList = ({
     return true;
   });
   
+  // Add refresh handler for NoServicesMessage
+  const handleRefresh = () => {
+    // In a real implementation, this would refetch data
+    console.log('Refreshing services list');
+    window.location.reload();
+  };
+  
   if (filteredServices.length === 0) {
-    return <NoServicesMessage />;
+    return <NoServicesMessage 
+      onRefresh={handleRefresh} 
+      isFiltered={!!category || !!searchQuery || !!priceRange || minRating > 0} 
+    />;
   }
   
   return (

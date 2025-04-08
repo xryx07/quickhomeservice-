@@ -1,0 +1,51 @@
+
+@layer components {
+  /* Improve dark mode text visibility */
+  .dark .text-muted-foreground {
+    @apply text-opacity-90;
+  }
+  
+  .dark .service-card {
+    @apply border border-gray-800 hover:border-gray-700;
+  }
+  
+  /* Direct color assignments instead of circular @apply */
+  .dark .bg-gray-50 {
+    background-color: theme('colors.gray.900');
+  }
+  
+  .dark .bg-gray-100 {
+    background-color: theme('colors.gray.800');
+  }
+  
+  .dark .text-gray-600 {
+    color: theme('colors.gray.300');
+  }
+  
+  /* Make sure service image container has proper contrast - avoid circular @apply */
+  .dark .relative.rounded-lg.overflow-hidden {
+    border: 1px solid theme('colors.gray.800');
+    box-shadow: theme('boxShadow.md');
+  }
+  
+  /* Improve feature list visibility in dark mode */
+  .dark .flex.items-center.text-sm.text-gray-600 {
+    color: theme('colors.gray.300');
+  }
+  
+  /* Fix visibility of feature list checkmarks */
+  .dark .text-green-500 {
+    color: theme('colors.green.400');
+    opacity: 0.9;
+  }
+  
+  /* Fix visibility of service features in cards */
+  .dark .text-sm.text-gray-600 {
+    color: theme('colors.gray.300');
+  }
+  
+  /* Improve visibility of features list in service cards */
+  .dark .flex.items-center.text-sm {
+    color: theme('colors.gray.300');
+  }
+}
