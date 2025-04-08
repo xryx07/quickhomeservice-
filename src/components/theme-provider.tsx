@@ -43,13 +43,22 @@ export function ThemeProvider({
         : "light";
       
       root.classList.add(systemTheme);
+      root.style.colorScheme = systemTheme;
       return;
     }
     
     root.classList.add(theme);
+    root.style.colorScheme = theme;
     
     // Force update the HTML attribute for immediate styling
     document.documentElement.setAttribute('data-theme', theme);
+    
+    // Apply deeper dark mode if needed
+    if (theme === 'dark') {
+      document.body.style.backgroundColor = '#121212';
+    } else {
+      document.body.style.backgroundColor = '';
+    }
   }, [theme]);
 
   const value = {

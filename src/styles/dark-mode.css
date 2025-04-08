@@ -11,11 +11,11 @@
   
   /* Direct color assignments instead of circular @apply */
   .dark .bg-gray-50 {
-    background-color: theme('colors.gray.900');
+    background-color: theme('colors.gray.950');
   }
   
   .dark .bg-gray-100 {
-    background-color: theme('colors.gray.800');
+    background-color: theme('colors.gray.900');
   }
   
   .dark .text-gray-600 {
@@ -47,5 +47,31 @@
   /* Improve visibility of features list in service cards */
   .dark .flex.items-center.text-sm {
     color: theme('colors.gray.300');
+  }
+  
+  /* Enhanced background for dark mode */
+  .dark {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  /* Darker card backgrounds */
+  .dark .bg-background {
+    background-color: #121212;
+  }
+  
+  .dark .bg-card {
+    background-color: #1a1a1a;
+  }
+  
+  /* Improved contrast for borders */
+  .dark .border {
+    border-color: #2a2a2a;
+  }
+  
+  /* Better contrast for service cards in dark mode */
+  .dark .card {
+    background-color: #1a1a1a;
+    border-color: #2a2a2a;
   }
 }
