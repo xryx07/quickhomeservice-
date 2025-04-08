@@ -1,107 +1,91 @@
 
-import { useEffect, useState } from 'react';
-import ServiceCard from '@/components/ServiceCard';
-import { useServiceData } from '@/hooks/useServiceData';
+import { Link } from 'react-router-dom';
+import { Check, Star } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import NoServicesMessage from './NoServicesMessage';
-import useServiceRefresh from '@/hooks/useServiceRefresh';
+import { allServices } from '@/data/services';
 import { Service } from '@/utils/types';
-import { getServiceImage } from '@/utils/imageUtils';
-import { Skeleton } from '@/components/ui/skeleton';
 
 interface ServicesListProps {
   category?: string;
   searchQuery?: string;
   priceRange?: [number, number];
+  minRating?: number;
 }
 
-const ServicesList = ({ category, searchQuery, priceRange }: ServicesListProps) => {
-  const { refreshCounter, handleRefresh } = useServiceRefresh();
-  const { services, isLoading, error } = useServiceData(refreshCounter);
-  const [filteredServices, setFilteredServices] = useState<Service[] | null>(null);
-  
+const ServicesList = ({
+  category,
+  searchQuery = '',
+  priceRange,
+  minRating = 0
+}: ServicesListProps) => {
   // Filter services based on props
-  useEffect(() => {
-    if (!services) return;
+  const filteredServices = allServices.filter((service) => {
+    // Category filter
+    if (category && service.category !== category) return false;
     
-    let result = [...services];
-    
-    // Filter by category if provided
-    if (category && category !== 'All') {
-      result = result.filter(service => 
-        service.category.toLowerCase() === category.toLowerCase()
-      );
+    // Search query filter
+    if (
+      searchQuery &&
+      !service.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !service.description.toLowerCase().includes(searchQuery.toLowerCase())
+    ) {
+      return false;
     }
     
-    // Filter by search query if provided
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(service => 
-        service.name.toLowerCase().includes(query) || 
-        service.description.toLowerCase().includes(query)
-      );
+    // Price range filter
+    if (priceRange && (service.price < priceRange[0] || service.price > priceRange[1])) {
+      return false;
     }
     
-    // Filter by price range if provided
-    if (priceRange) {
-      const [min, max] = priceRange;
-      result = result.filter(service => 
-        service.price >= min && service.price <= max
-      );
-    }
+    // Rating filter
+    if (service.rating < minRating) return false;
     
-    // Make sure all services have valid images
-    result = result.map(service => {
-      if (!service.image || !service.image.startsWith('http')) {
-        // Use category-specific image
-        return {
-          ...service,
-          image: getServiceImage(service.category)
-        };
-      }
-      return service;
-    });
-    
-    setFilteredServices(result);
-  }, [services, category, searchQuery, priceRange]);
+    return true;
+  });
   
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="space-y-3 bg-card rounded-lg overflow-hidden border">
-            <Skeleton className="h-48 w-full" />
-            <div className="p-4">
-              <Skeleton className="h-6 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-full mb-1" />
-              <Skeleton className="h-4 w-5/6 mb-4" />
-              <div className="flex flex-wrap gap-1 mb-4">
-                {[...Array(3)].map((_, j) => (
-                  <Skeleton key={j} className="h-5 w-16 rounded-full" />
-                ))}
-              </div>
-              <div className="flex justify-between pt-2 border-t dark:border-gray-700">
-                <Skeleton className="h-8 w-16" />
-                <Skeleton className="h-8 w-24" />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-  
-  if (error || !services) {
-    return <NoServicesMessage onRefresh={handleRefresh} isFiltered={false} />;
-  }
-  
-  if (filteredServices && filteredServices.length === 0) {
-    return <NoServicesMessage onRefresh={handleRefresh} isFiltered={true} />;
+  if (filteredServices.length === 0) {
+    return <NoServicesMessage />;
   }
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-      {filteredServices && filteredServices.map((service) => (
-        <ServiceCard key={service.id} service={service} />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {filteredServices.map((service) => (
+        <Link key={service.id} to={`/services/${service.id}`}>
+          <Card className="h-full service-card">
+            <div className="relative">
+              <img
+                src={service.image}
+                alt={service.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="absolute top-2 right-2 bg-white dark:bg-gray-800 rounded-full px-2 py-1 flex items-center text-sm font-medium">
+                <Star className="h-4 w-4 text-amber-500 mr-1" fill="currentColor" />
+                <span>{service.rating.toFixed(1)}</span>
+              </div>
+            </div>
+            <CardContent className="p-5">
+              <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
+              <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{service.description}</p>
+              
+              {/* Features list with improved dark mode visibility */}
+              <div className="space-y-2 mb-4">
+                {service.features && service.features.slice(0, 3).map((feature, index) => (
+                  <div key={index} className="flex items-center text-sm dark:text-gray-300">
+                    <Check size={14} className="text-green-500 dark:text-green-400 mr-1 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex justify-between items-center mt-auto">
+                <div className="font-bold">${service.price.toFixed(0)}</div>
+                <Button variant="outline" size="sm">View Details</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       ))}
     </div>
   );
