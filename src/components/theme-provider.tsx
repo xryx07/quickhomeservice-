@@ -55,9 +55,11 @@ export function ThemeProvider({
     
     // Apply deeper dark mode if needed
     if (theme === 'dark') {
-      document.body.style.backgroundColor = '#121212';
+      document.body.style.backgroundColor = '#0a0a0a'; // Darker background
+      document.body.classList.add('dark-mode-active');
     } else {
       document.body.style.backgroundColor = '';
+      document.body.classList.remove('dark-mode-active');
     }
   }, [theme]);
 

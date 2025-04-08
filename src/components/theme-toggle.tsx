@@ -7,15 +7,15 @@ import { useEffect } from "react";
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
-  // Apply a darker transition effect
+  // Apply a darker transition effect with longer duration for smoother transition
   useEffect(() => {
-    document.documentElement.style.transition = 'background-color 0.5s ease, color 0.5s ease';
+    document.documentElement.style.transition = 'background-color 0.7s ease, color 0.7s ease';
     
     // Force reflow for better style application
     if (theme === 'dark') {
-      document.body.classList.add('bg-[#121212]');
+      document.body.classList.add('bg-[#0a0a0a]');
     } else {
-      document.body.classList.remove('bg-[#121212]');
+      document.body.classList.remove('bg-[#0a0a0a]');
     }
     
     return () => {
@@ -35,7 +35,7 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
       className={`h-9 w-9 rounded-full transition-all duration-300 ${
         theme === 'dark' 
-          ? 'bg-gray-800 border-gray-700 hover:bg-gray-700' 
+          ? 'bg-gray-900 border-gray-800 hover:bg-gray-800' 
           : 'bg-background border-primary/20 hover:bg-secondary/80'
       }`}
     >

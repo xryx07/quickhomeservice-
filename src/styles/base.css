@@ -46,41 +46,41 @@
   }
 
   .dark {
-    --background: 240 10% 4%;
+    --background: 240 10% 3%;
     --foreground: 0 0% 98%;
 
-    --card: 240 10% 6%;
+    --card: 240 10% 5%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 4%;
+    --popover: 240 10% 3%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 0 0% 98%;
     --primary-foreground: 240 5.9% 10%;
 
-    --secondary: 240 3.7% 12%;
+    --secondary: 240 3.7% 10%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 12%;
+    --muted: 240 3.7% 10%;
     --muted-foreground: 240 5% 84%;
 
-    --accent: 240 3.7% 12%;
+    --accent: 240 3.7% 10%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15%;
-    --input: 240 3.7% 15%;
+    --border: 240 3.7% 13%;
+    --input: 240 3.7% 13%;
     --ring: 240 4.9% 83.9%;
 
-    --sidebar-background: 240 10% 4%;
+    --sidebar-background: 240 10% 3%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 0 0% 98%;
     --sidebar-primary-foreground: 240 5.9% 10%;
-    --sidebar-accent: 240 3.7% 12%;
+    --sidebar-accent: 240 3.7% 10%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15%;
+    --sidebar-border: 240 3.7% 13%;
     --sidebar-ring: 240 4.9% 83.9%;
   }
 }
@@ -91,7 +91,7 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground transition-colors duration-500;
   }
   
   html.dark {

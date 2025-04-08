@@ -1,4 +1,5 @@
 
+
 @layer components {
   /* Improve dark mode text visibility */
   .dark .text-muted-foreground {
@@ -49,29 +50,56 @@
     color: theme('colors.gray.300');
   }
   
-  /* Enhanced background for dark mode */
+  /* Enhanced background for dark mode - DARKER VERSION */
   .dark {
-    background-color: #121212;
+    background-color: #0a0a0a; /* Darker than before */
     color: #e0e0e0;
   }
   
   /* Darker card backgrounds */
   .dark .bg-background {
-    background-color: #121212;
+    background-color: #0a0a0a; /* Darker than before */
   }
   
   .dark .bg-card {
-    background-color: #1a1a1a;
+    background-color: #121212; /* Darker than before */
   }
   
   /* Improved contrast for borders */
   .dark .border {
-    border-color: #2a2a2a;
+    border-color: #252525;
   }
   
   /* Better contrast for service cards in dark mode */
   .dark .card {
-    background-color: #1a1a1a;
-    border-color: #2a2a2a;
+    background-color: #121212;
+    border-color: #252525;
+  }
+  
+  /* Additional dark mode enhancements */
+  .dark .bg-gray-800 {
+    background-color: #0f0f0f; /* Darker background */
+  }
+  
+  .dark .bg-gray-900 {
+    background-color: #080808; /* Even darker background */
+  }
+  
+  /* Input fields in dark mode */
+  .dark input, .dark textarea, .dark select {
+    background-color: #151515;
+    border-color: #303030;
+  }
+  
+  /* Button styling in dark mode */
+  .dark .bg-primary {
+    background-color: #f0f0f0;
+  }
+  
+  /* Dropdown and popup windows */
+  .dark [role="dialog"],
+  .dark [role="menu"] {
+    background-color: #121212;
+    border-color: #303030;
   }
 }
