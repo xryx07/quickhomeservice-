@@ -1,5 +1,4 @@
 
-
 @layer components {
   /* Improve dark mode text visibility */
   .dark .text-muted-foreground {
@@ -7,7 +6,8 @@
   }
   
   .dark .service-card {
-    @apply border border-gray-800 hover:border-gray-700;
+    border: 1px solid theme('colors.gray.800');
+    @apply hover:border-gray-700;
   }
   
   /* Direct color assignments instead of circular @apply */
@@ -103,4 +103,3 @@
     border-color: #252525;
   }
 }
-
