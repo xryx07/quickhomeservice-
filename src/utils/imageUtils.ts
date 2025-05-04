@@ -11,13 +11,15 @@ export const fallbackImages = {
   profile: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   document: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   repair: "https://images.unsplash.com/photo-1578652520385-c05f6f3b2c11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  appliance: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  appliance: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   cleaning: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   plumbing: "https://images.unsplash.com/photo-1585704032915-c3400305e979?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   electrician: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  beauty: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  beauty: "https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  pestcontrol: "https://images.unsplash.com/photo-1594761051656-111174a540db?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  carpentry: "https://images.unsplash.com/photo-1577570983510-a0b677e2bd44?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  painting: "https://images.unsplash.com/photo-1562848709-86afdce5db6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   "Pest Control": "https://images.unsplash.com/photo-1584179234953-7b549f4b1e33?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  carpentry: "https://images.unsplash.com/photo-1586864387789-628af9feed72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   "Home Painting": "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   default: "https://images.unsplash.com/photo-1588854337236-6889d631faa8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
 };
