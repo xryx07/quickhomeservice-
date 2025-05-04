@@ -55,7 +55,7 @@ export function ThemeProvider({
     
     // Apply deeper dark mode if needed
     if (theme === 'dark') {
-      document.body.style.backgroundColor = '#0a0a0a'; // Darker background
+      document.body.style.backgroundColor = '#050505'; // Even darker background
       document.body.classList.add('dark-mode-active');
     } else {
       document.body.style.backgroundColor = '';

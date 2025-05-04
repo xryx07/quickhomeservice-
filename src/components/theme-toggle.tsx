@@ -9,13 +9,13 @@ export function ThemeToggle() {
 
   // Apply a darker transition effect with longer duration for smoother transition
   useEffect(() => {
-    document.documentElement.style.transition = 'background-color 0.7s ease, color 0.7s ease';
+    document.documentElement.style.transition = 'background-color 0.9s ease, color 0.9s ease';
     
     // Force reflow for better style application
     if (theme === 'dark') {
-      document.body.classList.add('bg-[#0a0a0a]');
+      document.body.classList.add('bg-[#050505]');
     } else {
-      document.body.classList.remove('bg-[#0a0a0a]');
+      document.body.classList.remove('bg-[#050505]');
     }
     
     return () => {
@@ -35,7 +35,7 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
       className={`h-9 w-9 rounded-full transition-all duration-300 ${
         theme === 'dark' 
-          ? 'bg-gray-900 border-gray-800 hover:bg-gray-800' 
+          ? 'bg-black border-gray-900 hover:bg-gray-900' 
           : 'bg-background border-primary/20 hover:bg-secondary/80'
       }`}
     >
