@@ -61,8 +61,8 @@ const Hero = () => {
         {/* Right Column: Image */}
         <div className="relative h-full min-h-[400px]">
           <img 
-            src="https://images.unsplash.com/photo-1578652520385-c05f6f3b2c11?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-            alt="Technician repairing computer"
+            src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+            alt="Home service technician"
             className="w-full h-full object-cover"
           />
         </div>
