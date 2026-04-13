@@ -2,12 +2,18 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, CheckCircle } from 'lucide-react';
+import { Search, Shield, Zap, Briefcase, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { getAllCities } from '@/data/indianLocations';
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  const popularCities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow'];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,93 +23,113 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="p-8 lg:p-16 flex flex-col justify-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            तेज़ और किफायती घर की सेवाएं
-          </h1>
-          <p className="text-lg text-muted-foreground mb-2">
-            Fast & Affordable Home Services
-          </p>
-          <p className="text-lg text-muted-foreground mb-8">
-            भरोसेमंद सर्विस प्रोवाइडर, आपके दरवाज़े पर। पूरे भारत में उपलब्ध।
-          </p>
+    <div className="relative">
+      {/* Hero Section - UC Style dark hero with city selector */}
+      <div className="relative bg-foreground text-background min-h-[520px]">
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/95 to-foreground/70 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1920&q=80"
+          alt="Home Service Professional"
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
+        />
 
-          <form onSubmit={handleSearch} className="flex w-full mb-8">
-            <Input
-              type="text"
-              placeholder="सेवा खोजें... (जैसे प्लंबर, इलेक्ट्रीशियन, AC रिपेयर)"
-              className="h-12 w-full rounded-r-none text-lg"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button type="submit" className="h-12 px-6 rounded-l-none btn-brand">
-              <Search className="mr-2" size={18} />
-              खोजें
-            </Button>
-          </form>
+        <div className="relative z-20 container mx-auto px-4 py-16 md:py-24">
+          <div className="max-w-2xl">
+            <p className="text-xs tracking-[0.3em] uppercase text-background/60 mb-4 font-medium">QUICKHOMESERVICE</p>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+              {t('hero.title')}
+            </h1>
+            <p className="text-lg text-background/70 mb-8">
+              {t('hero.subtitle')}
+            </p>
 
-          <div className="space-y-3">
-            <div className="flex items-center">
-              <CheckCircle size={20} className="text-primary mr-2" />
-              <span className="text-foreground">⚡ 30 मिनट में रिस्पॉन्स</span>
-            </div>
-            <div className="flex items-center">
-              <CheckCircle size={20} className="text-primary mr-2" />
-              <span className="text-foreground">✅ वेरिफाइड प्रोफेशनल</span>
-            </div>
-            <div className="flex items-center">
-              <CheckCircle size={20} className="text-primary mr-2" />
-              <span className="text-foreground">💰 किफायती दाम, कोई छुपी फीस नहीं</span>
-            </div>
-            <div className="flex items-center">
-              <CheckCircle size={20} className="text-primary mr-2" />
-              <span className="text-foreground">🏙️ 100+ भारतीय शहरों में सेवा</span>
+            {/* City + Search - UC style */}
+            <div className="bg-background/10 backdrop-blur-md rounded-xl p-5 border border-background/20">
+              <p className="text-sm text-background/70 mb-3">{t('hero.select_city')}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {popularCities.map(city => (
+                  <button
+                    key={city}
+                    onClick={() => setSelectedCity(city)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                      selectedCity === city
+                        ? 'bg-background text-foreground'
+                        : 'bg-background/10 text-background/80 hover:bg-background/20'
+                    }`}
+                  >
+                    {city}
+                  </button>
+                ))}
+              </div>
+
+              <form onSubmit={handleSearch} className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                  <Input
+                    type="text"
+                    placeholder={t('hero.search_placeholder')}
+                    className="h-12 pl-10 bg-background text-foreground rounded-lg border-0"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <Button type="submit" className="h-12 px-6 btn-brand rounded-lg">
+                  {t('hero.search')} <ChevronRight size={16} className="ml-1" />
+                </Button>
+              </form>
             </div>
           </div>
         </div>
-
-        <div className="relative h-full min-h-[400px]">
-          <img
-            src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="घर पर सेवा देता हुआ तकनीशियन"
-            className="w-full h-full object-cover"
-          />
-        </div>
       </div>
 
-      <div className="bg-secondary py-12">
+      {/* Why QuickHomeService - UC Style */}
+      <div className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-background p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8">{t('section.why_us')}</h2>
+
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">{t('hero.trust_1')}</h3>
+                    <p className="text-sm text-muted-foreground">{t('hero.trust_1_desc')}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Zap size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">{t('hero.trust_2')}</h3>
+                    <p className="text-sm text-muted-foreground">{t('hero.trust_2_desc')}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Briefcase size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">{t('hero.trust_3')}</h3>
+                    <p className="text-sm text-muted-foreground">{t('hero.trust_3_desc')}</p>
+                  </div>
+                </div>
               </div>
-              <h3 className="font-semibold mb-2">मुफ़्त जाँच / Free Diagnostics</h3>
-              <p className="text-sm text-muted-foreground">बिना किसी अतिरिक्त शुल्क के समस्या की पहचान। पारदर्शी कीमत।</p>
             </div>
 
-            <div className="bg-background p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+            <div className="bg-muted rounded-2xl p-8 text-center">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield size={40} className="text-primary" />
               </div>
-              <h3 className="font-semibold mb-2">तेज़ सर्विस / Fast Repair</h3>
-              <p className="text-sm text-muted-foreground">अधिकांश रिपेयर उसी दिन पूरी। आपके समय का सम्मान।</p>
-            </div>
-
-            <div className="bg-background p-6 rounded-lg shadow-sm text-center">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold mb-2">संतुष्टि की गारंटी</h3>
-              <p className="text-sm text-muted-foreground">हर सेवा पर 100% संतुष्टि की गारंटी। नहीं तो पैसे वापस।</p>
+              <h3 className="text-2xl font-bold mb-2">{t('hero.quality_assured')}</h3>
+              <p className="text-muted-foreground">{t('hero.quality_desc')}</p>
             </div>
           </div>
         </div>
