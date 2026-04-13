@@ -1,21 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-
-const cities = [
-  'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 
-  'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow'
-];
-
-const states = [
-  'Maharashtra', 'Delhi', 'Karnataka', 'Telangana', 'Tamil Nadu',
-  'West Bengal', 'Gujarat', 'Rajasthan', 'Uttar Pradesh', 'Madhya Pradesh'
-];
+import { indianStates, getCitiesByState } from '@/data/indianLocations';
 
 interface AddressFormProps {
   street: string;
@@ -42,93 +32,98 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   addressType, setAddressType,
   handleGetCurrentLocation
 }) => {
+  const cities = state ? getCitiesByState(state) : [];
+
   return (
     <>
       <div className="space-y-1">
         <div className="flex justify-between items-center">
-          <Label htmlFor="addressType">Address Type</Label>
-          <Button 
-            type="button" 
-            variant="outline" 
-            size="sm" 
+          <Label htmlFor="addressType">पता प्रकार / Address Type</Label>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
             onClick={handleGetCurrentLocation}
             className="text-xs"
           >
-            Use Current Location
+            📍 वर्तमान स्थान / Current Location
           </Button>
         </div>
         <Select value={addressType} onValueChange={(value) => setAddressType(value as 'home' | 'work' | 'other')}>
           <SelectTrigger id="addressType">
-            <SelectValue placeholder="Select address type" />
+            <SelectValue placeholder="पता प्रकार चुनें" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="home">Home</SelectItem>
-            <SelectItem value="work">Work</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            <SelectItem value="home">🏠 घर / Home</SelectItem>
+            <SelectItem value="work">🏢 ऑफिस / Work</SelectItem>
+            <SelectItem value="other">📍 अन्य / Other</SelectItem>
           </SelectContent>
         </Select>
       </div>
-      
+
       <div className="space-y-1">
-        <Label htmlFor="street">Street Address</Label>
+        <Label htmlFor="street">पता / Street Address</Label>
         <Textarea
           id="street"
-          placeholder="Enter your street address, house number, building, etc."
+          placeholder="मकान नंबर, भवन का नाम, गली, कॉलोनी..."
           value={street}
           onChange={(e) => setStreet(e.target.value)}
           className="resize-none"
           rows={2}
         />
       </div>
-      
+
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1">
-          <Label htmlFor="city">City</Label>
-          <Select value={city} onValueChange={setCity}>
+          <Label htmlFor="state">राज्य / State</Label>
+          <Select value={state} onValueChange={(val) => { setState(val); setCity(''); }}>
+            <SelectTrigger id="state">
+              <SelectValue placeholder="राज्य चुनें" />
+            </SelectTrigger>
+            <SelectContent>
+              {indianStates.map((s) => (
+                <SelectItem key={s} value={s}>{s}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="city">शहर / City</Label>
+          <Select value={city} onValueChange={setCity} disabled={!state}>
             <SelectTrigger id="city">
-              <SelectValue placeholder="Select city" />
+              <SelectValue placeholder={state ? "शहर चुनें" : "पहले राज्य चुनें"} />
             </SelectTrigger>
             <SelectContent>
               {cities.map((c) => (
                 <SelectItem key={c} value={c}>{c}</SelectItem>
               ))}
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div className="space-y-1">
-          <Label htmlFor="state">State</Label>
-          <Select value={state} onValueChange={setState}>
-            <SelectTrigger id="state">
-              <SelectValue placeholder="Select state" />
-            </SelectTrigger>
-            <SelectContent>
-              {states.map((s) => (
-                <SelectItem key={s} value={s}>{s}</SelectItem>
-              ))}
-              <SelectItem value="other">Other</SelectItem>
+              <SelectItem value="other">अन्य / Other</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1">
-          <Label htmlFor="zipCode">PIN Code</Label>
+          <Label htmlFor="zipCode">पिन कोड / PIN Code</Label>
           <Input
             id="zipCode"
-            placeholder="Enter PIN code"
+            placeholder="6 अंकों का पिन कोड"
             value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+              setZipCode(val);
+            }}
+            maxLength={6}
           />
         </div>
-        
+
         <div className="space-y-1">
-          <Label htmlFor="landmark">Landmark (Optional)</Label>
+          <Label htmlFor="landmark">लैंडमार्क (वैकल्पिक)</Label>
           <Input
             id="landmark"
-            placeholder="Nearby landmark"
+            placeholder="नजदीकी लैंडमार्क"
             value={landmark}
             onChange={(e) => setLandmark(e.target.value)}
           />
