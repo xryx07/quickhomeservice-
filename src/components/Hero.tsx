@@ -5,8 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Search, Shield, Zap, Briefcase, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { getAllCities } from '@/data/indianLocations';
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');

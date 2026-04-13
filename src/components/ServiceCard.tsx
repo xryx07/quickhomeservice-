@@ -15,7 +15,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ service }: ServiceCardProps) => {
-  const { id, name, description, price, image, rating, providerId, providerName, features, category } = service;
+  const { id, name, description, price, image, rating, providerName, features, category } = service;
   const { t } = useLanguage();
   const serviceImage = image && image.startsWith('http') ? image : getServiceImage(category);
 
