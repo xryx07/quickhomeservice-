@@ -14,16 +14,266 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      addresses: {
+        Row: {
+          city: string
+          created_at: string
+          id: string
+          is_default: boolean | null
+          landmark: string | null
+          state: string
+          street: string
+          type: string
+          user_id: string
+          zip_code: string
+        }
+        Insert: {
+          city: string
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          landmark?: string | null
+          state: string
+          street: string
+          type?: string
+          user_id: string
+          zip_code: string
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          landmark?: string | null
+          state?: string
+          street?: string
+          type?: string
+          user_id?: string
+          zip_code?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          address_city: string
+          address_landmark: string | null
+          address_state: string
+          address_street: string
+          address_type: string | null
+          address_zip: string
+          commission: number
+          created_at: string
+          customer_email: string | null
+          customer_id: string
+          customer_name: string
+          customer_phone: string | null
+          date_time: string
+          feedback: string | null
+          id: string
+          note: string | null
+          payment_method: string | null
+          price: number
+          provider_id: string | null
+          provider_name: string
+          rating: number | null
+          service_id: string | null
+          service_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address_city: string
+          address_landmark?: string | null
+          address_state: string
+          address_street: string
+          address_type?: string | null
+          address_zip: string
+          commission?: number
+          created_at?: string
+          customer_email?: string | null
+          customer_id: string
+          customer_name?: string
+          customer_phone?: string | null
+          date_time: string
+          feedback?: string | null
+          id?: string
+          note?: string | null
+          payment_method?: string | null
+          price?: number
+          provider_id?: string | null
+          provider_name?: string
+          rating?: number | null
+          service_id?: string | null
+          service_name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address_city?: string
+          address_landmark?: string | null
+          address_state?: string
+          address_street?: string
+          address_type?: string | null
+          address_zip?: string
+          commission?: number
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string
+          customer_name?: string
+          customer_phone?: string | null
+          date_time?: string
+          feedback?: string | null
+          id?: string
+          note?: string | null
+          payment_method?: string | null
+          price?: number
+          provider_id?: string | null
+          provider_name?: string
+          rating?: number | null
+          service_id?: string | null
+          service_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          city: string | null
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          state: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          duration: string | null
+          equipment_included: boolean | null
+          features: string[] | null
+          id: string
+          image: string | null
+          is_active: boolean
+          name: string
+          price: number
+          provider_id: string | null
+          provider_name: string
+          rating: number
+          service_area: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string
+          duration?: string | null
+          equipment_included?: boolean | null
+          features?: string[] | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name: string
+          price?: number
+          provider_id?: string | null
+          provider_name?: string
+          rating?: number
+          service_area?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          duration?: string | null
+          equipment_included?: boolean | null
+          features?: string[] | null
+          id?: string
+          image?: string | null
+          is_active?: boolean
+          name?: string
+          price?: number
+          provider_id?: string | null
+          provider_name?: string
+          rating?: number
+          service_area?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "customer" | "provider"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +400,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "customer", "provider"],
+    },
   },
 } as const
