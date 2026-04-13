@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { User, AtSign, Phone, Key } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { validateIndianPhone } from '@/data/indianLocations';
 
 interface RegistrationFormProps {
@@ -20,53 +21,32 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const { signUp } = useAuth();
+  const { t } = useLanguage();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (phone && !validateIndianPhone(phone)) {
-      toast({
-        title: "अमान्य फ़ोन नंबर",
-        description: "कृपया एक मान्य 10 अंकों का भारतीय मोबाइल नंबर दर्ज करें।",
-        variant: "destructive",
-      });
+      toast({ title: "Invalid Phone", description: "Please enter a valid 10-digit Indian mobile number.", variant: "destructive" });
       return;
     }
-
     if (password.length < 6) {
-      toast({
-        title: "Weak Password",
-        description: "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
-        variant: "destructive",
-      });
+      toast({ title: "Weak Password", description: "Password must be at least 6 characters.", variant: "destructive" });
       return;
     }
 
     setIsLoading(true);
-
     try {
-      const phoneFormatted = phone.startsWith('+91') ? phone : `+91${phone.replace(/\D/g, '')}`;
+      const phoneFormatted = phone ? (phone.startsWith('+91') ? phone : `+91${phone.replace(/\D/g, '')}`) : '';
       const { error } = await signUp(email, password, name, phoneFormatted);
-
       if (error) {
-        toast({
-          title: "पंजीकरण विफल / Registration Failed",
-          description: error.message || "Please try again.",
-          variant: "destructive",
-        });
+        toast({ title: "Registration Failed", description: error.message, variant: "destructive" });
       } else {
-        toast({
-          title: "पंजीकरण सफल! / Registration Successful!",
-          description: "कृपया अपना ईमेल सत्यापित करें। Please check your email to verify your account.",
-        });
+        toast({ title: "Registration Successful!", description: "Your account has been created. Welcome!" });
         onClose();
       }
-    } catch (error: any) {
-      toast({
-        title: "Registration failed",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
+    } catch {
+      toast({ title: "Registration failed", description: "Something went wrong.", variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -75,71 +55,36 @@ const RegistrationForm = ({ onClose }: RegistrationFormProps) => {
   return (
     <form onSubmit={handleRegister} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="name">पूरा नाम / Full Name</Label>
+        <Label htmlFor="name">{t('auth.full_name')}</Label>
         <div className="relative">
           <User className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-          <Input
-            id="name"
-            placeholder="अपना पूरा नाम दर्ज करें"
-            className="pl-10"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <Input id="name" placeholder="Enter your full name" className="pl-10" value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
       </div>
-
       <div className="space-y-2">
-        <Label htmlFor="reg-email">ईमेल / Email</Label>
+        <Label htmlFor="reg-email">{t('auth.email')}</Label>
         <div className="relative">
           <AtSign className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-          <Input
-            id="reg-email"
-            type="email"
-            placeholder="अपना ईमेल दर्ज करें"
-            className="pl-10"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <Input id="reg-email" type="email" placeholder="Enter your email" className="pl-10" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
       </div>
-
       <div className="space-y-2">
-        <Label htmlFor="phone">फ़ोन नंबर / Phone (+91)</Label>
+        <Label htmlFor="phone">{t('auth.phone')}</Label>
         <div className="relative">
           <Phone className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-          <Input
-            id="phone"
-            placeholder="10 अंकों का मोबाइल नंबर"
-            className="pl-10"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            maxLength={10}
-          />
+          <Input id="phone" placeholder="10-digit mobile number" className="pl-10" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={10} />
         </div>
-        <p className="text-xs text-muted-foreground">उदाहरण: 9876543210</p>
+        <p className="text-xs text-muted-foreground">e.g. 9876543210</p>
       </div>
-
       <div className="space-y-2">
-        <Label htmlFor="reg-password">पासवर्ड / Password</Label>
+        <Label htmlFor="reg-password">{t('auth.password')}</Label>
         <div className="relative">
           <Key className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-          <Input
-            id="reg-password"
-            type="password"
-            placeholder="पासवर्ड बनाएं (कम से कम 6 अक्षर)"
-            className="pl-10"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-          />
+          <Input id="reg-password" type="password" placeholder="Create a password (min 6 chars)" className="pl-10" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
         </div>
       </div>
-
       <Button type="submit" className="w-full btn-brand" disabled={isLoading}>
-        {isLoading ? 'प्रोसेसिंग...' : 'पंजीकरण करें / Register'}
+        {isLoading ? t('auth.processing') : t('auth.register_btn')}
       </Button>
     </form>
   );
