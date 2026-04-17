@@ -1,9 +1,9 @@
 
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import LoginForm from './LoginForm';
 import RegistrationForm from './RegistrationForm';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -13,27 +13,25 @@ interface AuthModalProps {
 }
 
 const AuthModal = ({ isOpen, onClose, mode, setMode }: AuthModalProps) => {
-  const { t } = useLanguage();
-
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold">
-            {mode === 'login' ? t('auth.welcome') : t('auth.create_account')}
+            {mode === 'login' ? 'Welcome Back!' : 'Create Your Account'}
           </DialogTitle>
         </DialogHeader>
-
+        
         <Tabs defaultValue={mode} onValueChange={(value) => setMode(value as 'login' | 'register')}>
           <TabsList className="grid grid-cols-2 mb-4">
-            <TabsTrigger value="login">{t('nav.login')}</TabsTrigger>
-            <TabsTrigger value="register">{t('nav.signup')}</TabsTrigger>
+            <TabsTrigger value="login">Login</TabsTrigger>
+            <TabsTrigger value="register">Register</TabsTrigger>
           </TabsList>
-
+          
           <TabsContent value="login">
             <LoginForm onClose={onClose} />
           </TabsContent>
-
+          
           <TabsContent value="register">
             <RegistrationForm onClose={onClose} />
           </TabsContent>

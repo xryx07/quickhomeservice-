@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, User, LogIn, Home, Briefcase, Phone, LogOut, CalendarDays, X } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { AuthModal } from './auth';
 import { useToast } from '@/components/ui/use-toast';
 import { ThemeToggle } from './theme-toggle';
@@ -19,130 +18,107 @@ const Navigation = () => {
   const { isAuthenticated, profile, userRole, signOut } = useAuth();
   const { t } = useLanguage();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const openLoginModal = () => { setAuthMode('login'); setIsAuthModalOpen(true); };
-  const openRegisterModal = () => { setAuthMode('register'); setIsAuthModalOpen(true); };
+  const openLogin = () => { setAuthMode('login'); setIsAuthModalOpen(true); };
+  const openSignup = () => { setAuthMode('register'); setIsAuthModalOpen(true); };
 
   const handleLogout = async () => {
     await signOut();
-    toast({ title: t('nav.logout'), description: "You have been logged out." });
+    toast({ title: t('nav.logout'), description: '' });
     navigate('/');
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">QH</span>
-            </div>
-            <span className="text-xl font-bold hidden sm:inline">QuickHomeService</span>
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-16 lg:h-20">
+          {/* Logo — wordmark with editorial slash */}
+          <Link to="/" className="flex items-baseline gap-2 group">
+            <span className="font-display text-2xl lg:text-[1.6rem] font-medium tracking-tight">Quick</span>
+            <span className="font-display text-2xl lg:text-[1.6rem] font-medium tracking-tight display-italic text-primary">home</span>
+            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.2em] text-muted-foreground ml-1 self-center">est. 2025</span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1.5">
-              <Home size={16} /> {t('nav.home')}
-            </Link>
-            <Link to="/services" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1.5">
-              <Briefcase size={16} /> {t('nav.services')}
-            </Link>
-            <Link to="/become-provider" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1.5">
-              <User size={16} /> {t('nav.become_provider')}
-            </Link>
-            <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1.5">
-              <Phone size={16} /> {t('nav.contact')}
-            </Link>
-          </div>
+          {/* Center nav */}
+          <nav className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+            <Link to="/" className="nav-link text-sm uppercase tracking-widest font-medium">{t('nav.home')}</Link>
+            <Link to="/services" className="nav-link text-sm uppercase tracking-widest font-medium">{t('nav.services')}</Link>
+            <Link to="/become-provider" className="nav-link text-sm uppercase tracking-widest font-medium">{t('nav.provider')}</Link>
+            <Link to="/contact" className="nav-link text-sm uppercase tracking-widest font-medium">{t('nav.contact')}</Link>
+          </nav>
 
-          <div className="hidden md:flex items-center space-x-2">
+          {/* Right cluster */}
+          <div className="hidden lg:flex items-center gap-2">
             <LanguageToggle />
             <ThemeToggle />
-
+            <div className="w-px h-6 bg-border mx-2" />
             {isAuthenticated ? (
               <div className="relative group">
-                <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                  <div className="w-7 h-7 bg-primary/10 rounded-full flex items-center justify-center">
-                    <User size={14} />
-                  </div>
-                  <span className="max-w-[100px] truncate text-sm">{profile?.full_name || t('nav.my_account')}</span>
+                <Button variant="ghost" className="text-sm rounded-full">
+                  {profile?.full_name?.split(' ')[0] || t('nav.account')}
                 </Button>
-                <div className="absolute right-0 mt-1 w-52 bg-background rounded-lg shadow-xl invisible group-hover:visible transition-all border border-border z-50">
-                  <div className="py-2">
-                    <Link to={userRole === 'provider' ? '/provider/profile' : '/profile'} className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors">
-                      <User size={14} /> {t('nav.profile')}
-                    </Link>
-                    <Link to="/profile" className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors">
-                      <CalendarDays size={14} /> {t('nav.my_bookings')}
+                <div className="absolute right-0 top-full pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all">
+                  <div className="bg-popover border border-border rounded-lg shadow-[var(--shadow-lift)] py-2">
+                    <Link to={userRole === 'provider' ? '/provider/profile' : '/profile'} className="block px-4 py-2.5 text-sm hover:bg-secondary">
+                      {t('nav.profile')}
                     </Link>
                     {userRole === 'admin' && (
-                      <Link to="/admin" className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors">
-                        {t('nav.admin')}
-                      </Link>
+                      <Link to="/admin" className="block px-4 py-2.5 text-sm hover:bg-secondary">{t('nav.admin')}</Link>
                     )}
-                    <hr className="my-1 border-border" />
-                    <button onClick={handleLogout} className="flex items-center gap-2 w-full text-left px-4 py-2.5 text-sm hover:bg-muted text-destructive transition-colors">
-                      <LogOut size={14} /> {t('nav.logout')}
-                    </button>
+                    {userRole === 'provider' && (
+                      <Link to="/provider/profile" className="block px-4 py-2.5 text-sm hover:bg-secondary">{t('nav.providerDash')}</Link>
+                    )}
+                    <div className="border-t border-border my-1" />
+                    <button onClick={handleLogout} className="w-full text-left px-4 py-2.5 text-sm hover:bg-secondary">{t('nav.logout')}</button>
                   </div>
                 </div>
               </div>
             ) : (
               <>
-                <Button variant="ghost" size="sm" onClick={openLoginModal} className="text-sm">
-                  <LogIn size={16} className="mr-1.5" /> {t('nav.login')}
-                </Button>
-                <Button size="sm" onClick={openRegisterModal} className="btn-brand text-sm">
+                <Button variant="ghost" onClick={openLogin} className="text-sm rounded-full">{t('nav.login')}</Button>
+                <Button onClick={openSignup} className="rounded-full bg-foreground text-background hover:bg-foreground/90 text-sm group">
                   {t('nav.signup')}
+                  <ArrowUpRight size={15} className="ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Button>
               </>
             )}
           </div>
 
-          <div className="md:hidden flex items-center space-x-1">
+          {/* Mobile */}
+          <div className="lg:hidden flex items-center gap-1">
             <LanguageToggle />
             <ThemeToggle />
-            <button onClick={toggleMenu} className="p-2">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 ml-1" aria-label="Menu">
               {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden mt-3 pb-4 animate-fade-in border-t border-border pt-3">
-            <div className="flex flex-col space-y-1">
-              {[
-                { to: '/', label: t('nav.home') },
-                { to: '/services', label: t('nav.services') },
-                { to: '/become-provider', label: t('nav.become_provider') },
-                { to: '/contact', label: t('nav.contact') },
-              ].map(link => (
-                <Link key={link.to} to={link.to} className="px-3 py-2.5 rounded-md text-sm font-medium hover:bg-muted transition-colors" onClick={() => setIsMenuOpen(false)}>
-                  {link.label}
-                </Link>
-              ))}
-
+          <div className="lg:hidden py-6 border-t border-border animate-fade-in">
+            <nav className="flex flex-col gap-1">
+              <Link to="/" onClick={() => setIsMenuOpen(false)} className="py-3 font-display text-2xl">{t('nav.home')}</Link>
+              <Link to="/services" onClick={() => setIsMenuOpen(false)} className="py-3 font-display text-2xl">{t('nav.services')}</Link>
+              <Link to="/become-provider" onClick={() => setIsMenuOpen(false)} className="py-3 font-display text-2xl">{t('nav.provider')}</Link>
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="py-3 font-display text-2xl">{t('nav.contact')}</Link>
+              <div className="h-px bg-border my-4" />
               {isAuthenticated ? (
                 <>
-                  <Link to="/profile" className="px-3 py-2.5 rounded-md text-sm font-medium hover:bg-muted" onClick={() => setIsMenuOpen(false)}>{t('nav.profile')}</Link>
-                  <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="px-3 py-2.5 rounded-md text-sm font-medium text-destructive hover:bg-muted text-left">
-                    {t('nav.logout')}
-                  </button>
+                  <Link to={userRole === 'provider' ? '/provider/profile' : '/profile'} onClick={() => setIsMenuOpen(false)} className="py-3">{t('nav.profile')}</Link>
+                  <button onClick={handleLogout} className="text-left py-3">{t('nav.logout')}</button>
                 </>
               ) : (
-                <div className="flex gap-3 pt-2 px-3">
-                  <Button variant="outline" size="sm" onClick={() => { openLoginModal(); setIsMenuOpen(false); }} className="flex-1">{t('nav.login')}</Button>
-                  <Button size="sm" onClick={() => { openRegisterModal(); setIsMenuOpen(false); }} className="flex-1 btn-brand">{t('nav.signup')}</Button>
+                <div className="flex gap-3 pt-2">
+                  <Button variant="outline" onClick={openLogin} className="flex-1 rounded-full">{t('nav.login')}</Button>
+                  <Button onClick={openSignup} className="flex-1 rounded-full bg-foreground text-background">{t('nav.signup')}</Button>
                 </div>
               )}
-            </div>
+            </nav>
           </div>
         )}
       </div>
 
       <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} mode={authMode} setMode={setAuthMode} />
-    </nav>
+    </header>
   );
 };
 

@@ -1,112 +1,91 @@
-
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Twitter, Linkedin, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
   const { t } = useLanguage();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-foreground text-background">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-background rounded-lg flex items-center justify-center">
-                <span className="text-foreground font-bold text-sm">QH</span>
-              </div>
-              <h2 className="text-xl font-bold">QuickHomeService</h2>
-            </div>
-            <p className="mb-6 text-background/60 text-sm leading-relaxed">
-              {t('footer.about')}
-            </p>
-            <div className="flex space-x-3">
-              {[Facebook, Instagram, Twitter, Youtube].map((Icon, i) => (
-                <a key={i} href="#" className="w-9 h-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-background/20 transition-colors">
-                  <Icon size={16} />
-                </a>
-              ))}
-            </div>
+    <footer className="bg-foreground text-background relative overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-12 pt-20 lg:pt-28 pb-10">
+        {/* Oversized wordmark */}
+        <div className="border-b border-background/10 pb-12 mb-12">
+          <div className="font-display text-6xl md:text-8xl lg:text-[10rem] font-medium leading-none tracking-tighter">
+            Quick<span className="display-italic text-primary">home</span>.
           </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.quick_links')}</h3>
-            <ul className="space-y-2.5">
-              {[
-                { to: '/', label: t('nav.home') },
-                { to: '/services', label: t('nav.services') },
-                { to: '/become-provider', label: t('nav.become_provider') },
-                { to: '/contact', label: t('nav.contact') },
-                { to: '/terms', label: t('footer.terms') },
-              ].map(link => (
-                <li key={link.to}>
-                  <Link to={link.to} className="text-sm text-background/60 hover:text-background transition-colors">{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.our_services')}</h3>
-            <ul className="space-y-2.5">
-              {[
-                { cat: 'cleaning', label: t('cat.cleaning') },
-                { cat: 'electrician', label: t('cat.electrician') },
-                { cat: 'plumbing', label: t('cat.plumbing') },
-                { cat: 'beauty', label: t('cat.beauty') },
-                { cat: 'appliance', label: t('cat.appliance') },
-                { cat: 'painting', label: t('cat.painting') },
-              ].map(s => (
-                <li key={s.cat}>
-                  <Link to={`/services?category=${s.cat}`} className="text-sm text-background/60 hover:text-background transition-colors">{s.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.contact_us')}</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm text-background/60">
-                <Mail size={16} className="mt-0.5 flex-shrink-0" />
-                <span>support@quickhomeservice.com</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-background/60">
-                <Phone size={16} className="mt-0.5 flex-shrink-0" />
-                <span>+91 8770219859</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-background/60">
-                <MapPin size={16} className="mt-0.5 flex-shrink-0" />
-                <span>Mumbai, Maharashtra, India</span>
-              </li>
-            </ul>
-
-            <div className="mt-6">
-              <p className="text-xs text-background/40 font-medium uppercase tracking-wider mb-2">{t('footer.download_app')}</p>
-              <div className="flex gap-2">
-                <div className="bg-background/10 rounded-lg px-3 py-2 text-xs">
-                  <span className="text-background/40">Coming Soon</span>
-                  <p className="font-semibold text-sm">Google Play</p>
-                </div>
-                <div className="bg-background/10 rounded-lg px-3 py-2 text-xs">
-                  <span className="text-background/40">Coming Soon</span>
-                  <p className="font-semibold text-sm">App Store</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p className="mt-6 text-background/60 text-lg max-w-md">{t('foot.tag')}</p>
         </div>
 
-        <div className="border-t border-background/10 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-background/40">
-          <p>&copy; {new Date().getFullYear()} QuickHomeService. {t('footer.rights')}</p>
-          <div className="flex gap-4 mt-2 md:mt-0">
-            <Link to="/terms" className="hover:text-background transition-colors">{t('footer.terms')}</Link>
-            <Link to="/terms" className="hover:text-background transition-colors">{t('footer.privacy')}</Link>
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+          <FooterCol title={t('foot.company')}>
+            <FooterLink to="/">{t('foot.about')}</FooterLink>
+            <FooterLink to="/become-provider">{t('nav.provider')}</FooterLink>
+            <FooterLink to="/">{t('foot.careers')}</FooterLink>
+            <FooterLink to="/">{t('foot.press')}</FooterLink>
+          </FooterCol>
+
+          <FooterCol title={t('foot.svc')}>
+            <FooterLink to="/services?category=cleaning">Cleaning</FooterLink>
+            <FooterLink to="/services?category=plumbing">Plumbing</FooterLink>
+            <FooterLink to="/services?category=electrician">Electrical</FooterLink>
+            <FooterLink to="/services?category=beauty">Beauty & Spa</FooterLink>
+          </FooterCol>
+
+          <FooterCol title={t('foot.help')}>
+            <FooterLink to="/contact">{t('foot.contact')}</FooterLink>
+            <FooterLink to="/terms">{t('foot.terms')}</FooterLink>
+            <FooterLink to="/terms">{t('foot.privacy')}</FooterLink>
+          </FooterCol>
+
+          <FooterCol title="Connect">
+            <a href="mailto:hello@quickhome.in" className="block py-1.5 text-sm text-background/70 hover:text-background transition-colors">
+              hello@quickhome.in
+            </a>
+            <a href="tel:+918770219859" className="block py-1.5 text-sm text-background/70 hover:text-background transition-colors">
+              +91 8770 219 859
+            </a>
+            <div className="flex gap-3 mt-4">
+              <SocialIcon><Instagram size={16} /></SocialIcon>
+              <SocialIcon><Twitter size={16} /></SocialIcon>
+              <SocialIcon><Linkedin size={16} /></SocialIcon>
+            </div>
+          </FooterCol>
+        </div>
+
+        <div className="border-t border-background/10 pt-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <p className="text-xs uppercase tracking-widest text-background/50">
+            © {year} Quickhome. {t('foot.rights')}
+          </p>
+          <p className="text-xs uppercase tracking-widest text-background/50 flex items-center gap-1">
+            {t('foot.made')} <span className="text-primary">●</span>
+          </p>
         </div>
       </div>
     </footer>
   );
 };
+
+const FooterCol = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div>
+    <h4 className="text-xs uppercase tracking-[0.2em] text-background/50 mb-5">{title}</h4>
+    <div className="space-y-1">{children}</div>
+  </div>
+);
+
+const FooterLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
+  <Link to={to} className="group block py-1.5 text-sm text-background/70 hover:text-background transition-colors">
+    <span className="inline-flex items-center gap-1">
+      {children}
+      <ArrowUpRight size={12} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+    </span>
+  </Link>
+);
+
+const SocialIcon = ({ children }: { children: React.ReactNode }) => (
+  <a href="#" className="w-9 h-9 rounded-full border border-background/20 flex items-center justify-center text-background/70 hover:bg-background hover:text-foreground hover:border-background transition-all">
+    {children}
+  </a>
+);
 
 export default Footer;

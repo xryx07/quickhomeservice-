@@ -1,21 +1,22 @@
-
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Languages } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const LanguageToggle = () => {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   return (
     <Button
       variant="ghost"
       size="sm"
-      onClick={toggleLanguage}
-      className="flex items-center gap-1.5 text-sm font-medium"
-      title={language === 'en' ? 'हिंदी में बदलें' : 'Switch to English'}
+      onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+      className="h-9 px-3 rounded-full font-medium text-xs uppercase tracking-widest hover:bg-secondary"
+      aria-label="Toggle language"
     >
-      <Languages size={16} />
-      {language === 'en' ? 'हिंदी' : 'EN'}
+      <span className={language === 'en' ? 'text-foreground' : 'text-muted-foreground'}>EN</span>
+      <span className="mx-1.5 text-muted-foreground/50">/</span>
+      <span className={language === 'hi' ? 'text-foreground font-display' : 'text-muted-foreground font-display'}>हि</span>
     </Button>
   );
 };
+
+export default LanguageToggle;
