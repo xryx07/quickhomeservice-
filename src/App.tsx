@@ -18,13 +18,15 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
 import { ThemeProvider } from "./components/theme-provider";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 const App = () => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="ui-theme">
+        <LanguageProvider>
         <AuthProvider>
           <TooltipProvider>
             <Toaster />
@@ -48,6 +50,7 @@ const App = () => {
             </BrowserRouter>
           </TooltipProvider>
         </AuthProvider>
+        </LanguageProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
