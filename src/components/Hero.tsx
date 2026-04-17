@@ -52,12 +52,17 @@ const Hero = () => {
             </form>
           </div>
 
-          {/* Right — vertical stat column */}
-          <div className="lg:col-span-5 lg:pl-12 lg:border-l border-border">
-            <div className="space-y-10">
-              <Stat number="12,400" label={t('hero.stat1.k')} />
-              <Stat number="142" label={t('hero.stat2.k')} />
-              <Stat number="4.91" label={t('hero.stat3.k')} suffix="/5" />
+          {/* Right — 3D scene with stats overlay */}
+          <div className="lg:col-span-5 lg:pl-12 lg:border-l border-border relative">
+            <div className="relative h-[420px] lg:h-[520px] -mx-6 lg:mx-0">
+              <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-br from-secondary/40 to-transparent" />}>
+                <HeroScene />
+              </Suspense>
+              <div className="absolute bottom-0 left-6 lg:left-0 right-6 lg:right-0 flex flex-wrap gap-3 lg:gap-4 z-10">
+                <MiniStat number="12.4k" label={t('hero.stat1.k')} />
+                <MiniStat number="142" label={t('hero.stat2.k')} />
+                <MiniStat number="4.91" label={t('hero.stat3.k')} suffix="/5" />
+              </div>
             </div>
           </div>
         </div>
@@ -81,13 +86,13 @@ const Hero = () => {
   );
 };
 
-const Stat = ({ number, label, suffix }: { number: string; label: string; suffix?: string }) => (
-  <div>
-    <div className="flex items-baseline gap-1">
-      <span className="font-display text-5xl md:text-6xl font-medium tabular-nums">{number}</span>
-      {suffix && <span className="text-muted-foreground text-xl">{suffix}</span>}
+const MiniStat = ({ number, label, suffix }: { number: string; label: string; suffix?: string }) => (
+  <div className="bg-background/70 backdrop-blur-md border border-border/60 rounded-lg px-4 py-3 shadow-[var(--shadow-editorial)]">
+    <div className="flex items-baseline gap-0.5">
+      <span className="font-display text-2xl md:text-3xl font-medium tabular-nums leading-none">{number}</span>
+      {suffix && <span className="text-muted-foreground text-sm">{suffix}</span>}
     </div>
-    <p className="mt-2 text-sm uppercase tracking-widest text-muted-foreground">{label}</p>
+    <p className="mt-1.5 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
   </div>
 );
 
