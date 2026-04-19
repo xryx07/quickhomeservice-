@@ -83,8 +83,11 @@ const Index = () => {
         </section>
 
         {/* What sets us apart */}
-        <section className="py-24 lg:py-32 border-b border-border">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-24 lg:py-32 border-b border-border relative overflow-hidden">
+          <Suspense fallback={null}>
+            <AmbientShapes />
+          </Suspense>
+          <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
               <div className="lg:col-span-6">
                 <p className="eyebrow mb-6">{t('why.eyebrow')}</p>
