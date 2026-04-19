@@ -7,6 +7,9 @@ import { allCategories } from '@/data/services';
 import ChatBot from '@/components/chatbot';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowUpRight, ShieldCheck, Clock3, Wallet, Languages } from 'lucide-react';
+import { lazy, Suspense } from 'react';
+
+const AmbientShapes = lazy(() => import('@/components/three/AmbientShapes'));
 
 const Index = () => {
   const { t } = useLanguage();
