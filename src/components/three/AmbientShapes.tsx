@@ -58,7 +58,7 @@ const Shape = ({
 
 const AmbientShapes = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none opacity-[0.55] dark:opacity-40">
+    <div className="absolute inset-0 pointer-events-none opacity-[0.35] dark:opacity-25">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         dpr={[1, 1.5]}
@@ -68,11 +68,10 @@ const AmbientShapes = () => {
         <directionalLight position={[5, 4, 3]} intensity={1.1} color="#fff4e8" />
         <pointLight position={[-4, -2, 3]} intensity={0.5} color="#e25d27" />
         <Suspense fallback={null}>
-          <Shape position={[-4.2, 1.8, -1]} scale={0.55} geometry="torus" color="#e25d27" speed={0.4} rotationAxis="x" />
-          <Shape position={[4.5, -1.5, -0.5]} scale={0.45} geometry="icosa" color="#1a1410" speed={0.5} rotationAxis="y" />
-          <Shape position={[-3.5, -2.2, 0.5]} scale={0.32} geometry="octa" color="#e8a572" speed={0.6} rotationAxis="z" />
-          <Shape position={[3.8, 2.3, -1.5]} scale={0.4} geometry="box" color="#e25d27" speed={0.35} rotationAxis="y" />
-          <Shape position={[0, -3, -2]} scale={0.28} geometry="octa" color="#1a1410" speed={0.7} rotationAxis="x" />
+          <Shape position={[-6.5, 2.5, -1]} scale={0.5} geometry="torus" color="#e25d27" speed={0.4} rotationAxis="x" />
+          <Shape position={[6.5, -2, -0.5]} scale={0.4} geometry="icosa" color="#1a1410" speed={0.5} rotationAxis="y" />
+          <Shape position={[-5.5, -2.8, 0.5]} scale={0.3} geometry="octa" color="#e8a572" speed={0.6} rotationAxis="z" />
+          <Shape position={[5.8, 2.8, -1.5]} scale={0.35} geometry="box" color="#e25d27" speed={0.35} rotationAxis="y" />
         </Suspense>
       </Canvas>
     </div>
